@@ -19,7 +19,7 @@ chdir(normpath(join(abspath(__file__), pardir)))
 
 setup(
     name="core_user_registration_app",
-    version="1.0.0-alpha1",
+    version="1.0.0",
     description="User registration module for the core project",
     long_description=long_desc,
     author="NIST IT Lab",
