@@ -64,22 +64,6 @@ def get_global_version_managers(request, _cls=True):
     return UserTemplateVersionManager.get_global_version_managers(_cls)
 
 
-@access_control(can_write)
-def get_active_global_version_manager_by_title(version_manager_title, _cls=True):
-    """Return all active Version Managers with user set to None.
-
-    Args:
-        version_manager_title:
-        _cls:
-
-    Returns:
-
-    """
-    return UserTemplateVersionManager.get_active_global_version_manager_by_title(
-        version_manager_title
-    )
-
-
 def get_version_manager_by_id(id):
     """Return Version manager with given version manager id
 

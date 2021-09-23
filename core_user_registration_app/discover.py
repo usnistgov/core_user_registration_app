@@ -94,9 +94,7 @@ def _add_user_template():
             "Please configure the REGISTRY_XSD_USER_FILEPATH setting in your project."
         )
     try:
-        user_version_manager_api.get_active_global_version_manager_by_title(
-            xsd_filename
-        )
+        registry_system_api.get_active_global_version_manager_by_title(xsd_filename)
     except exceptions.DoesNotExist:
         default_xsd_path = finders.find(xsd_filepath)
         xsd_data = read_file_content(default_xsd_path)

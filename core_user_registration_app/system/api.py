@@ -43,3 +43,18 @@ def insert_registry_user_schema(xsd_filename, xsd_content):
 def get_all_data_structure_elements():
     """Returns all data structure elements"""
     return DataStructureElement.objects.all()
+
+
+def get_active_global_version_manager_by_title(version_manager_title):
+    """Return all active Version Managers with user set to None.
+
+    Args:
+        version_manager_title:
+        _cls:
+
+    Returns:
+
+    """
+    return UserTemplateVersionManager.get_active_global_version_manager_by_title(
+        version_manager_title
+    )
