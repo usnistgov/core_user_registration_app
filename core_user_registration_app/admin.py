@@ -3,7 +3,6 @@
 from django.contrib import admin
 from django.urls import re_path
 
-import core_user_registration_app.views.user.ajax as user_ajax
 from core_user_registration_app.views.admin import (
     views as admin_views,
     ajax as admin_ajax,

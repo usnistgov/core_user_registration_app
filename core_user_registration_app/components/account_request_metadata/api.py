@@ -3,17 +3,17 @@
 
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
+
 import core_main_app.utils.notifications.mail as send_mail_api
+from core_main_app.access_control.api import (
+    has_perm_administration,
+)
+from core_main_app.access_control.decorators import access_control
 from core_main_app.commons.exceptions import ApiError
 from core_user_registration_app.components.account_request_metadata.models import (
     AccountRequestMetadata,
 )
 from core_website_app.settings import SERVER_URI
-from core_main_app.access_control.decorators import access_control
-from core_main_app.access_control.api import (
-    has_perm_administration,
-    can_read,
-)
 
 
 @access_control(has_perm_administration)

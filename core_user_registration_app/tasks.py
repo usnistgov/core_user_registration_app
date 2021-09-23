@@ -3,14 +3,14 @@
 import logging
 from datetime import timedelta
 
-from django.utils import timezone
 from celery.schedules import crontab
 from celery.task import periodic_task
-from core_user_registration_app.system import api as system_api
+from django.utils import timezone
 
 from core_user_registration_app.settings import (
     USER_DATA_STRUCTURE_HOURS_THRESHOLD,
 )
+from core_user_registration_app.system import api as system_api
 
 logger = logging.getLogger(__name__)
 

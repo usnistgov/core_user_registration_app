@@ -16,8 +16,8 @@ Including another URLconf
 from django.conf.urls import include
 from django.urls import re_path
 
-import core_user_registration_app.views.user.ajax as user_ajax
 import core_user_registration_app.views.admin.ajax as admin_ajax
+import core_user_registration_app.views.user.ajax as user_ajax
 import core_user_registration_app.views.user.views as registration_views
 from core_main_app.rest.template import views as template_views
 

@@ -3,21 +3,19 @@ User Version Manager API
 """
 from core_main_app.access_control.api import is_superuser
 from core_main_app.access_control.decorators import access_control
+from core_main_app.commons import exceptions
 from core_main_app.components.template import api as template_api
 from core_main_app.components.template.access_control import can_read, can_read_global
+from core_main_app.components.version_manager import api as version_manager_api
+from core_main_app.components.version_manager.utils import (
+    get_latest_version_name,
+)
 from core_user_registration_app.components.user_template_version_manager.access_control import (
     can_write,
 )
 from core_user_registration_app.components.user_template_version_manager.models import (
     UserTemplateVersionManager,
 )
-from core_main_app.components.version_manager import api as version_manager_api
-from core_main_app.components.version_manager.access_control import can_read_list
-from core_main_app.components.version_manager.utils import (
-    get_latest_version_name,
-    get_version_name,
-)
-from core_main_app.commons import exceptions
 
 
 @access_control(can_write)

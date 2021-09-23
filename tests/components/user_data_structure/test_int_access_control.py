@@ -1,20 +1,20 @@
 """ ACL Test Data Structure
 """
 
-from tests.components.user_data_structure.fixtures.fixtures import (
-    UserDataStructureFixtures,
-)
 from django.contrib.auth.models import AnonymousUser
-from core_main_app.utils.tests_tools.MockUser import create_mock_user
+
+import core_user_registration_app.components.user_data_structure.api as user_data_structure_api
+from core_main_app.access_control.exceptions import AccessControlError
 from core_main_app.utils.integration_tests.integration_base_test_case import (
     MongoIntegrationBaseTestCase,
 )
-
-import core_user_registration_app.components.user_data_structure.api as user_data_structure_api
+from core_main_app.utils.tests_tools.MockUser import create_mock_user
 from core_user_registration_app.components.user_data_structure.models import (
     UserDataStructure,
 )
-from core_main_app.access_control.exceptions import AccessControlError
+from tests.components.user_data_structure.fixtures.fixtures import (
+    UserDataStructureFixtures,
+)
 
 fixture_data_structure = UserDataStructureFixtures()
 

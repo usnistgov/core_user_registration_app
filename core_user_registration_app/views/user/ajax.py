@@ -14,17 +14,14 @@ from core_parser_app.components.data_structure_element import (
     api as data_structure_element_api,
 )
 from core_parser_app.tools.parser.renderer.xml import XmlRenderer
-from core_user_registration_app.components.user_metadata import api as data_api
-from core_user_registration_app.components.user_metadata.models import UserMetadata
-from core_user_registration_app.components.user_data_structure import (
-    api as user_data_structure_api,
-)
 from core_user_registration_app.components.account_request_metadata import (
     api as account_request_metadata_api,
 )
-from core_user_registration_app.components.user_template_version_manager import (
-    api as user_version_manager_api,
+from core_user_registration_app.components.user_data_structure import (
+    api as user_data_structure_api,
 )
+from core_user_registration_app.components.user_metadata import api as data_api
+from core_user_registration_app.components.user_metadata.models import UserMetadata
 from xml_utils.xsd_tree.xsd_tree import XSDTree
 
 

@@ -1,14 +1,13 @@
 """ Set of functions to define the common rules for access control across collections
 """
 import logging
+
 from django.contrib.auth.models import User, AnonymousUser
+
+from core_main_app.access_control.exceptions import AccessControlError
 from core_user_registration_app.components.user_data_structure.models import (
     UserDataStructure,
 )
-from core_user_registration_app.components.user_data_structure import (
-    api as user_data_structure_api,
-)
-from core_main_app.access_control.exceptions import AccessControlError
 
 logger = logging.getLogger(__name__)
 

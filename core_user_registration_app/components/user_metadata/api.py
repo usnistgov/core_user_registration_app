@@ -4,19 +4,17 @@ import datetime
 
 import pytz
 
-import pymongo
 import core_main_app.access_control.api
 import core_main_app.components.workspace.access_control
-from core_main_app.access_control import api as api_access_control
 from core_main_app.access_control.decorators import access_control
 from core_main_app.commons import exceptions as exceptions
+from core_main_app.components.workspace import api as workspace_api
+from core_main_app.settings import DATA_SORTING_FIELDS
+from core_main_app.utils.xml import validate_xml_data
 from core_user_registration_app.components.user_metadata import (
     access_control as metadata_api_access_control,
 )
 from core_user_registration_app.components.user_metadata.models import UserMetadata
-from core_main_app.components.workspace import api as workspace_api
-from core_main_app.utils.xml import validate_xml_data
-from core_main_app.settings import DATA_SORTING_FIELDS
 from xml_utils.xsd_tree.xsd_tree import XSDTree
 
 

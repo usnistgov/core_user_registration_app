@@ -1,15 +1,14 @@
 """ User data Structure api
 """
-from core_user_registration_app.components.user_data_structure.models import (
-    UserDataStructure,
-)
+from core_main_app.access_control.api import has_perm_administration
+from core_main_app.access_control.decorators import access_control
 from core_user_registration_app.access_control.api import (
     can_read,
     can_change_owner,
-    can_write,
 )
-from core_main_app.access_control.api import has_perm_administration
-from core_main_app.access_control.decorators import access_control
+from core_user_registration_app.components.user_data_structure.models import (
+    UserDataStructure,
+)
 
 
 def upsert(user_data_structure, user):

@@ -1,7 +1,8 @@
 """ REST views for the registry template version manager API
 """
-from rest_framework.permissions import IsAuthenticated
+from django.contrib.admin.views.decorators import staff_member_required
 from django.http.response import HttpResponseBadRequest, HttpResponse
+from rest_framework.permissions import IsAuthenticated
 
 from core_main_app.rest.template_version_manager.abstract_views import (
     AbstractStatusTemplateVersion,
@@ -9,7 +10,6 @@ from core_main_app.rest.template_version_manager.abstract_views import (
 from core_user_registration_app.components.user_template_version_manager import (
     api as user_version_manager_api,
 )
-from django.contrib.admin.views.decorators import staff_member_required
 
 
 # ACL is done in the AbstractStatusTemplateVersion object

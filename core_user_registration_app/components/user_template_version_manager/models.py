@@ -1,8 +1,8 @@
 """
 Template Version Manager model
 """
+from django_mongoengine import fields
 from mongoengine import errors as mongoengine_errors
-from django_mongoengine import fields, Document
 
 from core_main_app.commons import exceptions
 from core_main_app.components.version_manager.models import VersionManager

@@ -2,14 +2,14 @@
 """
 
 from core_main_app.access_control.exceptions import AccessControlError
-from core_user_registration_app.components.user_template_version_manager import (
-    api as user_template_vm_api,
-)
 from core_main_app.utils.integration_tests.integration_base_test_case import (
     MongoIntegrationBaseTestCase,
 )
 from core_main_app.utils.tests_tools.MockUser import create_mock_user
 from core_main_app.utils.tests_tools.RequestMock import create_mock_request
+from core_user_registration_app.components.user_template_version_manager import (
+    api as user_template_vm_api,
+)
 from tests.components.user_template_version_manager.fixtures.fixtures import (
     UserTemplateVersionManagerAccessControlFixtures,
 )

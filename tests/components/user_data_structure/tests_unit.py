@@ -5,12 +5,12 @@ from unittest.case import TestCase
 from mock import patch
 
 import core_user_registration_app.components.user_data_structure.api as user_data_structure_api
+from core_main_app.commons import exceptions
+from core_main_app.components.template.models import Template
+from core_main_app.utils.tests_tools.MockUser import create_mock_user
 from core_user_registration_app.components.user_data_structure.models import (
     UserDataStructure,
 )
-from core_main_app.commons import exceptions
-from core_main_app.utils.tests_tools.MockUser import create_mock_user
-from core_main_app.components.template.models import Template
 
 
 class TestUserDataStructureGetById(TestCase):

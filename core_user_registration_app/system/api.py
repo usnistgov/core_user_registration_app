@@ -4,10 +4,10 @@
 from core_main_app.components.template.models import Template
 from core_main_app.components.version_manager.utils import get_latest_version_name
 from core_main_app.utils.xml import is_schema_valid, get_hash
+from core_parser_app.components.data_structure.models import DataStructureElement
 from core_user_registration_app.components.user_template_version_manager.models import (
     UserTemplateVersionManager,
 )
-from core_parser_app.components.data_structure.models import DataStructureElement
 
 
 def insert_registry_user_schema(xsd_filename, xsd_content):

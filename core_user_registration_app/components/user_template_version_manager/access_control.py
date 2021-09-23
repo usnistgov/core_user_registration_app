@@ -2,11 +2,11 @@
 """
 
 from core_main_app.access_control.exceptions import AccessControlError
-from core_user_registration_app.components.user_template_version_manager.models import (
-    UserTemplateVersionManager,
-)
 from core_main_app.utils.requests_utils.access_control import (
     get_request_from_args,
+)
+from core_user_registration_app.components.user_template_version_manager.models import (
+    UserTemplateVersionManager,
 )
 
 

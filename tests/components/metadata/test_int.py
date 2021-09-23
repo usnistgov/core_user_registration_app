@@ -1,32 +1,29 @@
 """ Unit Test UserMetadata
 """
-from types import SimpleNamespace
 
-from bson.objectid import ObjectId
 import datetime
+
 import pytz
+from bson.objectid import ObjectId
 
 from core_main_app.commons import exceptions
+from core_main_app.settings import DATA_SORTING_FIELDS
+from core_main_app.utils.integration_tests.integration_base_test_case import (
+    MongoIntegrationBaseTestCase,
+)
+from core_main_app.utils.integration_tests.integration_base_transaction_test_case import (
+    MongoIntegrationTransactionTestCase,
+)
+from core_main_app.utils.tests_tools.MockUser import create_mock_user
+from core_user_registration_app.components.user_metadata import api as user_metadata_api
 from core_user_registration_app.components.user_metadata.api import (
     check_xml_file_is_valid,
 )
 from core_user_registration_app.components.user_metadata.models import UserMetadata
-from core_user_registration_app.components.user_metadata import api as user_metadata_api
-from core_main_app.system import api as system_api
-from core_main_app.utils.tests_tools.MockUser import create_mock_user
-from core_main_app.utils.integration_tests.integration_base_test_case import (
-    MongoIntegrationBaseTestCase,
-)
-from core_main_app.settings import DATA_SORTING_FIELDS
 from tests.components.metadata.fixtures.fixtures import (
     DataFixtures,
     AccessControlDataFixture,
 )
-from core_main_app.components.template import api as template_api
-from core_main_app.utils.integration_tests.integration_base_transaction_test_case import (
-    MongoIntegrationTransactionTestCase,
-)
-from tests.components.user.fixtures.fixtures import UserFixtures
 from tests.components.metadata.fixtures.fixtures import DataMigrationFixture
 
 fixture_data_template = DataMigrationFixture()

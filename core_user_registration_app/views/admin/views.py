@@ -6,8 +6,9 @@ from django.conf import settings
 from django.contrib.admin.views.decorators import staff_member_required
 from django.http.response import HttpResponseRedirect
 from django.urls import reverse
-from django.utils.html import escape as html_escape
 from django.utils.decorators import method_decorator
+from django.utils.html import escape as html_escape
+
 import core_user_registration_app.components.account_request_metadata.api as account_request_api
 from core_main_app.commons import exceptions
 from core_main_app.components.template.models import Template
