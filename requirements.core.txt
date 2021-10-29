@@ -1,5 +1,5 @@
-core-main-app==1.17.*
-core-parser-app==1.17.*
-core-website-app==1.17.*
-signals-utils==1.11.*
-core-curate-app==1.17.*
+core-main-app==2.0.0-alpha1
+core-parser-app==2.0.0-alpha1
+core-website-app==2.0.0-alpha1
+signals-utils==1.12.*
+core-curate-app==2.0.0-alpha1
