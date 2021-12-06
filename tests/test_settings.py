@@ -1,5 +1,3 @@
-from core_main_app.utils.databases.mongoengine_database import Database
-
 SECRET_KEY = "fake-key"
 
 INSTALLED_APPS = [
@@ -14,6 +12,10 @@ INSTALLED_APPS = [
     # Extra apps
     "captcha",
     # Local apps
+    "core_main_app",
+    "core_website_app",
+    "core_parser_app",
+    "core_curate_app",
     "core_user_registration_app",
     "tests",
 ]
@@ -64,13 +66,7 @@ ROOT_URLCONF = "tests.urls"
 
 PASSWORD_HASHERS = ("django.contrib.auth.hashers.UnsaltedMD5PasswordHasher",)
 
-MOCK_DATABASE_NAME = "db_mock"
-MOCK_DATABASE_HOST = "mongomock://localhost"
-
 DATA_SORTING_FIELDS = ["+title"]
 
 CUSTOM_NAME = "Curator"
 ENABLE_SAML2_SSO_AUTH = False
-
-database = Database(MOCK_DATABASE_HOST, MOCK_DATABASE_NAME)
-database.connect()

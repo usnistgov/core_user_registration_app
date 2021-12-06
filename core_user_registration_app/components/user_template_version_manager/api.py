@@ -1,11 +1,9 @@
 """
 User Version Manager API
 """
-from core_main_app.access_control.api import is_superuser
 from core_main_app.access_control.decorators import access_control
-from core_main_app.commons import exceptions
 from core_main_app.components.template import api as template_api
-from core_main_app.components.template.access_control import can_read, can_read_global
+from core_main_app.components.template.access_control import can_read_global
 from core_main_app.components.version_manager import api as version_manager_api
 from core_main_app.components.version_manager.utils import (
     get_latest_version_name,
@@ -33,16 +31,17 @@ def insert(user_version_manager, template, request):
     # save the template in database
     template_api.upsert(template, request=request)
     try:
-        # insert the initial template in the version manager
-        version_manager_api.insert_version(
-            user_version_manager, template, request=request
-        )
-        # insert the version manager in database
+        # create a version manager
         version_manager_api.upsert(user_version_manager, request=request)
-        # get template display name
-        display_name = get_latest_version_name(user_version_manager)
-        # update saved template
-        template_api.set_display_name(template, display_name, request=request)
+        # set version manager
+        template.version_manager = user_version_manager
+        # set current version
+        if len(user_version_manager.versions) == 0:
+            template.is_current = True
+        # update template
+        template.display_name = get_latest_version_name(user_version_manager)
+        # save template
+        template.save_template()
         # return version manager
         return user_version_manager
     except Exception as e:
@@ -67,61 +66,13 @@ def get_global_version_managers(request, _cls=True):
 def get_version_manager_by_id(id):
     """Return Version manager with given version manager id
 
-    :param id:
-    :return:
+    Args:
+        id:
+
+    Returns:
+
     """
     return UserTemplateVersionManager.get_by_id(id)
-
-
-@access_control(can_read)
-def get_from_version(version, request):
-    """Return a version manager from a version.
-
-    Args:
-        version:
-        request:
-
-    Returns:
-
-    """
-    user_version_managers = UserTemplateVersionManager.get_all()
-    for user_version_manager in user_version_managers:
-        if str(version.id) in user_version_manager.versions:
-            return user_version_manager
-    raise exceptions.ApiError("No version manager could be found for this version.")
-
-
-@access_control(can_write)
-def set_current(version, request):
-    """Set the current version of the object, then saves it.
-
-    Args:
-        version:
-        request:
-
-    Returns:
-
-    """
-    user_version_manager = get_from_version(version, request=request)
-
-    # a disabled version cannot be current
-    if str(version.id) in user_version_manager.get_disabled_versions():
-        raise exceptions.ApiError(
-            "Unable to set the current version because it is disabled."
-        )
-
-    user_version_manager.set_current_version(version)
-    return upsert(user_version_manager, request=request)
-
-
-@access_control(is_superuser)
-def get_all(request, _cls=True):
-    """Return all Template Version Managers.
-
-    Returns:
-
-    """
-    return UserTemplateVersionManager.get_all_version_manager(_cls)
 
 
 def get_default_version_manager():
@@ -130,7 +81,7 @@ def get_default_version_manager():
     Returns:
 
     """
-    return UserTemplateVersionManager.objects(is_default=True)
+    return UserTemplateVersionManager.objects.filter(is_default=True)
 
 
 @access_control(can_write)
@@ -144,7 +95,7 @@ def upsert(user_version_manager, request):
     Returns:
 
     """
-    return user_version_manager.save_version_manager()
+    user_version_manager.save_version_manager()
 
 
 def set_default_version_manager(user_version_manager, request):

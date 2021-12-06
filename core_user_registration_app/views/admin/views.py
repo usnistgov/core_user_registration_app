@@ -273,7 +273,7 @@ def upload_template(request):
 
     context = {
         "object_name": "Template",
-        "url": reverse("admin:core_user_registration_app_upload_template"),
+        "url": reverse("core-admin:core_user_registration_app_upload_template"),
         "redirect_url": reverse("admin:core_user_registration_app_templates"),
     }
 

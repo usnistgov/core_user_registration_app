@@ -3,6 +3,17 @@
 from django.contrib import admin
 from django.urls import re_path
 
+from core_main_app.admin import core_admin_site
+from core_user_registration_app.components.account_request_metadata.models import (
+    AccountRequestMetadata,
+)
+from core_user_registration_app.components.user_data_structure.models import (
+    UserDataStructure,
+)
+from core_user_registration_app.components.user_metadata.models import UserMetadata
+from core_user_registration_app.components.user_template_version_manager.models import (
+    UserTemplateVersionManager,
+)
 from core_user_registration_app.views.admin import (
     views as admin_views,
     ajax as admin_ajax,
@@ -50,5 +61,9 @@ admin_urls = [
     ),
 ]
 
-urls = admin.site.get_urls()
-admin.site.get_urls = lambda: admin_urls + urls
+admin.site.register(UserDataStructure)
+admin.site.register(AccountRequestMetadata)
+admin.site.register(UserMetadata)
+admin.site.register(UserTemplateVersionManager)
+urls = core_admin_site.get_urls()
+core_admin_site.get_urls = lambda: admin_urls + urls

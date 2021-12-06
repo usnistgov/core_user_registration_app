@@ -41,7 +41,7 @@ def request_new_account(request):
                 request_form_data = request_form.cleaned_data
                 version_manager = user_version_manager_api.get_default_version_manager()
 
-                template_id = version_manager[0].current
+                template = version_manager[0].current_version
                 name = request.POST["username"]
 
                 user = User(
@@ -54,7 +54,7 @@ def request_new_account(request):
                 )
 
                 user_data_structure = UserDataStructure(
-                    user=name, template=template_id, name=name
+                    user=name, template=template, name=name
                 )
 
                 user_data_structure_api.upsert(user_data_structure, user)

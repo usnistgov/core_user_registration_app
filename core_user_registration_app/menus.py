@@ -9,12 +9,12 @@ from menu import Menu, MenuItem
 templates_children = (
     MenuItem(
         "User Template List",
-        reverse("admin:core_user_registration_app_templates"),
+        reverse("core-admin:core_user_registration_app_templates"),
         icon="list",
     ),
     MenuItem(
         "Upload New User Template",
-        reverse("admin:core_user_registration_app_upload_template"),
+        reverse("core-admin:core_user_registration_app_upload_template"),
         icon="upload",
     ),
 )
