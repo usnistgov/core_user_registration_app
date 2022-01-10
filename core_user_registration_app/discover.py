@@ -3,6 +3,8 @@
 import logging
 
 from django.contrib.auth.models import Group, Permission
+from django.core.exceptions import ObjectDoesNotExist
+from django_celery_beat.models import CrontabSchedule, PeriodicTask
 
 import core_main_app.permissions.rights as main_rights
 import core_user_registration_app.permissions.rights as registration_rights
@@ -14,6 +16,7 @@ from core_user_registration_app.settings import (
     REGISTRY_XSD_USER_FILEPATH,
 )
 from core_user_registration_app.system import api as registry_system_api
+from core_user_registration_app.tasks import delete_user_data_structure
 
 logger = logging.getLogger(__name__)
 
@@ -41,6 +44,8 @@ def init_registration_app():
     """
 
     try:
+        # Init scheduled tasks
+        _init_periodic_tasks()
         # Add template
         _add_user_template()
         # Init the permissions
@@ -184,3 +189,18 @@ def _bind_template_xslt(template_id, list_xslt, default_detail_xslt, list_detail
         )
     except Exception as e:
         raise Exception("Impossible to bind the template with XSLTs : " + str(e))
+
+
+def _init_periodic_tasks():
+    """Create periodic tasks for the app and add them to a crontab schedule"""
+    schedule, _ = CrontabSchedule.objects.get_or_create(
+        minute="*",
+    )
+    try:
+        PeriodicTask.objects.get(name=delete_user_data_structure.__name__)
+    except ObjectDoesNotExist:
+        PeriodicTask.objects.create(
+            crontab=schedule,
+            name=delete_user_data_structure.__name__,
+            task="core_user_registration_app.tasks.delete_user_data_structure",
+        )
