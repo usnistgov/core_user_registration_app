@@ -3,8 +3,7 @@
 import logging
 from datetime import timedelta
 
-from celery.schedules import crontab
-from celery.task import periodic_task
+from celery import shared_task
 from django.utils import timezone
 
 from core_user_registration_app.components.user_data_structure.models import (
@@ -18,7 +17,7 @@ from core_user_registration_app.system import api as system_api
 logger = logging.getLogger(__name__)
 
 
-@periodic_task(run_every=crontab(minute="*"))
+@shared_task
 def delete_user_data_structure():
     """DELETES every DELETE_USER_DATA_STRUCTURE_RATE the UserDataStructure in the DataStructure collection"""
     logger.info("Checking Old UserDataStructures")
