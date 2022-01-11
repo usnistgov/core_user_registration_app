@@ -21,7 +21,8 @@ def delete_user_data_structure():
     try:
         for data_structure_element in system_api.get_all_data_structure_elements():
             if (
-                data_structure_element.data_structure.collection
+                data_structure_element.data_structure
+                and data_structure_element.data_structure.collection
                 == "user_data_structure"
             ):
                 if (
