@@ -45,7 +45,7 @@ def insert(user_version_manager, template, request):
         # return version manager
         return user_version_manager
     except Exception as e:
-        template_api.delete(template, request=request)
+        user_version_manager.delete()
         raise e
 
 
