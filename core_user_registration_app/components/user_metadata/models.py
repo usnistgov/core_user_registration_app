@@ -27,6 +27,14 @@ class UserMetadata(AbstractData):
             ),
         ]
 
+    def get_dict_content(self):
+        """Return dict_content
+
+        Returns:
+
+        """
+        return self.dict_content
+
     @staticmethod
     def get_all(order_by_field):
         """Get all data.
