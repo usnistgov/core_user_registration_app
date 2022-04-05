@@ -7,7 +7,7 @@
 
 {% if not data.version_manager.user %}
     <!-- If no user is linked to the version manager, it means that we come from the global template list -->
-    {% url 'admin:core_user_registration_app_templates' as template_list_url %}
+    {% url 'core-admin:core_user_registration_app_templates' as template_list_url %}
     <a href="{% url 'admin:core_main_app_upload_template_version' data.version_manager.id %}"
        class="float-right btn btn-secondary">
         <i class="fas fa-upload"></i> Upload New Version
