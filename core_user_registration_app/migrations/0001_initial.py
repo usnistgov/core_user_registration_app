@@ -2,8 +2,10 @@
 
 import django.contrib.postgres.search
 import django.core.validators
-from django.db import migrations, models
 import django.db.models.deletion
+from django.db import migrations, models
+
+import core_main_app
 
 
 class Migration(migrations.Migration):
@@ -86,7 +88,12 @@ class Migration(migrations.Migration):
                         ],
                     ),
                 ),
-                ("xml_file", models.TextField()),
+                (
+                    "xml_file",
+                    models.FileField(
+                        upload_to=core_main_app.utils.storage.storage.user_directory_path
+                    ),
+                ),
                 (
                     "vector_column",
                     django.contrib.postgres.search.SearchVectorField(null=True),
