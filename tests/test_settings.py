@@ -13,6 +13,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # Extra apps
     "captcha",
+    "django_celery_beat",
     # Local apps
     "core_user_registration_app",
     "tests",
@@ -61,7 +62,7 @@ TEMPLATES = [
 LOGIN_URL = "/login"
 STATIC_URL = "/static/"
 ROOT_URLCONF = "tests.urls"
-
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 PASSWORD_HASHERS = ("django.contrib.auth.hashers.UnsaltedMD5PasswordHasher",)
 
 MOCK_DATABASE_NAME = "db_mock"
