@@ -11,6 +11,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # Extra apps
     "captcha",
+    "django_celery_beat",
     # Local apps
     "core_main_app",
     "core_website_app",
@@ -70,3 +71,4 @@ DATA_SORTING_FIELDS = ["+title"]
 
 CUSTOM_NAME = "Curator"
 ENABLE_SAML2_SSO_AUTH = False
+CELERYBEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
