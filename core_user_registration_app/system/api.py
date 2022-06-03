@@ -16,7 +16,7 @@ def insert_registry_user_schema(xsd_filename, xsd_content):
     template = Template(
         filename=xsd_filename, hash=get_hash(xsd_content), content=xsd_content
     )
-    template.save()
+    template.save_template()
 
     # save the template in database
     try:
