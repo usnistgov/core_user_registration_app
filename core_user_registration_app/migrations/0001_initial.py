@@ -95,6 +95,12 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 (
+                    "checksum",
+                    models.CharField(
+                        blank=True, default=None, max_length=512, null=True
+                    ),
+                ),
+                (
                     "vector_column",
                     django.contrib.postgres.search.SearchVectorField(null=True),
                 ),
