@@ -1,7 +1,6 @@
 """ Fixtures files for UserMetadata
 """
 from core_main_app.components.template.models import Template
-from core_main_app.components.workspace import api as workspace_api
 from core_main_app.components.workspace.models import Workspace
 from core_main_app.utils.integration_tests.fixture_interface import FixtureInterface
 from core_user_registration_app.components.user_metadata.models import UserMetadata

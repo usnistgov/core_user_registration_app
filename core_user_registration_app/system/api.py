@@ -20,8 +20,6 @@ def insert_registry_user_schema(xsd_filename, xsd_content):
 
     # save the template in database
     try:
-        from core_main_app.components.version_manager import api as version_manager_api
-
         user_version_manager = UserTemplateVersionManager(
             title=xsd_filename, is_default=True
         )
