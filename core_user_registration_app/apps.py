@@ -9,6 +9,7 @@ class UserRegistrationAppConfig(AppConfig):
     """Core application settings."""
 
     name = "core_user_registration_app"
+    verbose_name = "Core User Registration App"
 
     def ready(self):
         """Run when the app is ready.

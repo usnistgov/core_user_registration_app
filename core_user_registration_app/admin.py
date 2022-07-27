@@ -4,6 +4,13 @@ from django.contrib import admin
 from django.urls import re_path
 
 from core_main_app.admin import core_admin_site
+from core_main_app.components.template_version_manager.admin_site import (
+    CustomTemplateVersionManagerAdmin,
+)
+from core_main_app.utils.admin_site.view_only_admin import ViewOnlyAdmin
+from core_parser_app.components.data_structure.admin_site import (
+    CustomDataStructureAdmin,
+)
 from core_user_registration_app.components.account_request_metadata.models import (
     AccountRequestMetadata,
 )
@@ -61,9 +68,9 @@ admin_urls = [
     ),
 ]
 
-admin.site.register(UserDataStructure)
-admin.site.register(AccountRequestMetadata)
-admin.site.register(UserMetadata)
-admin.site.register(UserTemplateVersionManager)
+admin.site.register(UserDataStructure, CustomDataStructureAdmin)
+admin.site.register(AccountRequestMetadata, ViewOnlyAdmin)
+admin.site.register(UserMetadata, ViewOnlyAdmin)
+admin.site.register(UserTemplateVersionManager, CustomTemplateVersionManagerAdmin)
 urls = core_admin_site.get_urls()
 core_admin_site.get_urls = lambda: admin_urls + urls
