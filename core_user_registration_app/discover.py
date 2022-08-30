@@ -61,7 +61,7 @@ def _init_permissions():
     try:
         # Get or Create the default group
         anonymous, created = Group.objects.get_or_create(
-            name=main_rights.anonymous_group
+            name=main_rights.ANONYMOUS_GROUP
         )
 
         # Get registration permissions
