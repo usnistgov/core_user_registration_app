@@ -45,10 +45,8 @@ def insert(user_version_manager, template, request):
         template.save_template()
         # return version manager
         return user_version_manager
-    except exceptions.NotUniqueError as e:
-        raise e
     except Exception as e:
-        user_version_manager.delete()
+        template.delete()
         raise e
 
 
