@@ -15,23 +15,23 @@ def insert_registry_user_schema(xsd_filename, xsd_content):
     is_schema_valid(xsd_content)
     template = Template(
         filename=xsd_filename, hash=get_hash(xsd_content), content=xsd_content
-    ).save()
-    user_version_manager = UserTemplateVersionManager(
-        title=xsd_filename, is_default=True
     )
+    template.save_template()
+
     # save the template in database
     try:
-        from core_main_app.components.version_manager import api as version_manager_api
-
-        # insert the initial template in the version manager
-        user_version_manager.insert(template)
-        user_version_manager.set_current_version(template)
-        # insert the version manager in database
+        user_version_manager = UserTemplateVersionManager(
+            title=xsd_filename, is_default=True
+        )
         user_version_manager.save_version_manager()
-        # get template display name
-        display_name = get_latest_version_name(user_version_manager)
+        # insert the initial template in the version manager
+        template.version_manager = user_version_manager
+        # set current version
+        if len(user_version_manager.versions) == 0:
+            template.is_current = True
         # update saved template
-        template.display_name = display_name
+        template.display_name = get_latest_version_name(user_version_manager)
+        # save template
         template.save()
         # return version manager
         return user_version_manager

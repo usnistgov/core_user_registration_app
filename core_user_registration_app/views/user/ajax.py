@@ -58,19 +58,18 @@ def save_data(request):
                 user_data_structure.data_structure_element_root, request
             )
 
-            if user_data_structure._data is not None:
-                # create new data
-                data = UserMetadata()
-                data.title = user_data_structure.name
-                data.template = user_data_structure.template
-                data.user_id = str(request.user.id)
-                data.id = user_data_structure.pk
-                data.workspace = workspace_api.get_global_workspace()
+            # create new data
+            data = UserMetadata()
+            data.title = user_data_structure.name
+            data.template = user_data_structure.template
+            data.user_id = str(request.user.id)
+            data.id = user_data_structure.pk
+            data.workspace = workspace_api.get_global_workspace()
 
             # set content
             data.xml_content = xml_data
             # save data
-            data = data_api.upsert(data, request.user)
+            data_api.upsert(data, request.user)
             # insert Metadata reference in account request
             account_request_metadata_api.insert_metadata(
                 request.user, account_request_metadata_id, data

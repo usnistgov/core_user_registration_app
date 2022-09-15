@@ -80,10 +80,8 @@ def insert_metadata(user, account_id, metadata):
 
 
     """
-
-    account_request_metadata = get_account_request_metadata_by_id(account_id)
-    account_request_metadata.metadata = metadata
-    account_request_metadata.save()
+    # NOTE: used queryset.update to change metadata as assignment would not save change in database
+    AccountRequestMetadata.objects.filter(pk=account_id).update(metadata=metadata)
 
 
 def create_account_request(user):

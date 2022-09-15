@@ -26,10 +26,10 @@ class TestUserDataStructureGetById(TestCase):
         with self.assertRaises(exceptions.DoesNotExist):
             user_data_structure_api.get_by_id(1)
 
-    def test_data_structure_get_by_id_raises_model_error_if_not_found(self):
+    def test_data_structure_get_by_id_raises_doesnotexist_if_not_found(self):
 
         # Act # Assert
-        with self.assertRaises(exceptions.ModelError):
+        with self.assertRaises(exceptions.DoesNotExist):
             user_data_structure_api.get_by_id(1)
 
     @patch.object(UserDataStructure, "get_by_id")

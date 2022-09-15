@@ -1,23 +1,21 @@
 """User Data Structure models
 """
+from django.core.exceptions import ObjectDoesNotExist
+from django.db.models.signals import pre_delete
 
-from django_mongoengine import fields
-from mongoengine import errors as mongoengine_errors
-from mongoengine.errors import NotUniqueError
-from mongoengine.queryset.base import CASCADE
 
 from core_main_app.commons import exceptions
 from core_main_app.components.data.models import Data
 from core_parser_app.components.data_structure.models import DataStructure
 from core_user_registration_app.permissions import rights
-from signals_utils.signals.mongo import connector, signals
+from django.db import models, IntegrityError
 
 
 class UserDataStructure(DataStructure):
     """user data structure."""
 
-    form_string = fields.StringField(blank=True)
-    data = fields.ReferenceField(Data, blank=True, reverse_delete_rule=CASCADE)
+    form_string = models.TextField(blank=True)
+    data = models.ForeignKey(Data, blank=True, on_delete=models.CASCADE, null=True)
 
     @staticmethod
     def get_permission():
@@ -31,7 +29,7 @@ class UserDataStructure(DataStructure):
         """
         try:
             return self.save()
-        except NotUniqueError:
+        except IntegrityError:
             raise exceptions.ModelError("Unable to save the document: not unique.")
         except Exception as ex:
             raise exceptions.ModelError(str(ex))
@@ -49,7 +47,7 @@ class UserDataStructure(DataStructure):
         """
         try:
             return UserDataStructure.objects.get(pk=str(data_structure_id))
-        except mongoengine_errors.DoesNotExist as e:
+        except ObjectDoesNotExist as e:
             raise exceptions.DoesNotExist(str(e))
         except Exception as ex:
             raise exceptions.ModelError(str(ex))
@@ -61,7 +59,7 @@ class UserDataStructure(DataStructure):
         Returns:
 
         """
-        return UserDataStructure.objects().none()
+        return UserDataStructure.objects.none()
 
     @staticmethod
     def get_all():
@@ -79,7 +77,7 @@ class UserDataStructure(DataStructure):
         Returns:
 
         """
-        return UserDataStructure.objects(
+        return UserDataStructure.objects.filter(
             user=str(user_id), template=str(template_id)
         ).all()
 
@@ -94,7 +92,7 @@ class UserDataStructure(DataStructure):
             return UserDataStructure.objects.get(
                 user=str(user_id), template=str(template_id), name=name
             )
-        except mongoengine_errors.DoesNotExist as e:
+        except ObjectDoesNotExist as e:
             raise exceptions.DoesNotExist(str(e))
         except Exception as ex:
             raise exceptions.ModelError(str(ex))
@@ -107,7 +105,9 @@ class UserDataStructure(DataStructure):
         Args: user_id:
         Return:
         """
-        return UserDataStructure.objects(user=str(user_id), data__exists=False).all()
+        return UserDataStructure.objects.filter(
+            user=str(user_id), data__isnull=True
+        ).all()
 
     @staticmethod
     def get_all_except_user_id_with_no_data(user_id):
@@ -116,9 +116,11 @@ class UserDataStructure(DataStructure):
         Args: user_id:
         Return:
         """
-        return UserDataStructure.objects(
-            user__ne=str(user_id), data__exists=False
-        ).all()
+        return (
+            UserDataStructure.objects.exclude(user=str(user_id))
+            .filter(data__isnull=True)
+            .all()
+        )
 
     @staticmethod
     def get_all_by_user_id_and_template_id_with_no_data(user_id, template_id):
@@ -131,8 +133,8 @@ class UserDataStructure(DataStructure):
         Returns:
 
         """
-        return UserDataStructure.objects(
-            user=str(user_id), template=str(template_id), data__exists=False
+        return UserDataStructure.objects.filter(
+            user=str(user_id), template=str(template_id), data__isnull=True
         ).all()
 
     @staticmethod
@@ -144,7 +146,7 @@ class UserDataStructure(DataStructure):
         Returns:
 
         """
-        return UserDataStructure.objects(data__exists=False).all()
+        return UserDataStructure.objects.filter(data__isnull=True).all()
 
     @staticmethod
     def get_all_by_user(user_id):
@@ -153,7 +155,7 @@ class UserDataStructure(DataStructure):
         Returns:
 
         """
-        return UserDataStructure.objects(user=str(user_id)).all()
+        return UserDataStructure.objects.filter(user=str(user_id)).all()
 
     @staticmethod
     def get_by_data_id(data_id):
@@ -167,7 +169,7 @@ class UserDataStructure(DataStructure):
         """
         try:
             return UserDataStructure.objects.get(data=str(data_id))
-        except mongoengine_errors.DoesNotExist as e:
+        except ObjectDoesNotExist as e:
             raise exceptions.DoesNotExist(str(e))
         except Exception as ex:
             raise exceptions.ModelError(str(ex))
@@ -186,11 +188,11 @@ class UserDataStructure(DataStructure):
             return UserDataStructure.objects.get(
                 data_structure_element_root=str(data_structure_element_root.id)
             )
-        except mongoengine_errors.DoesNotExist as e:
+        except ObjectDoesNotExist as e:
             raise exceptions.DoesNotExist(str(e))
         except Exception as ex:
             raise exceptions.ModelError(str(ex))
 
 
 # Connect signals
-connector.connect(DataStructure.pre_delete, signals.pre_delete, UserDataStructure)
+pre_delete.connect(DataStructure.pre_delete, sender=UserDataStructure)

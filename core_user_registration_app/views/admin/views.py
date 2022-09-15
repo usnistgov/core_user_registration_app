@@ -273,8 +273,8 @@ def upload_template(request):
 
     context = {
         "object_name": "Template",
-        "url": reverse("admin:core_user_registration_app_upload_template"),
-        "redirect_url": reverse("admin:core_user_registration_app_templates"),
+        "url": reverse("core-admin:core_user_registration_app_upload_template"),
+        "redirect_url": reverse("core-admin:core_user_registration_app_templates"),
     }
 
     # method is POST
@@ -378,7 +378,7 @@ def _save_template(request, assets, context):
             template_version_manager, template, request=request
         )
         return HttpResponseRedirect(
-            reverse("admin:core_user_registration_app_templates")
+            reverse("core-admin:core_user_registration_app_templates")
         )
     except exceptions.XSDError as xsd_error:
         return handle_xsd_errors(
