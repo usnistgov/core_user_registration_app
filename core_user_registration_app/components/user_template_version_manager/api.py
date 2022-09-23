@@ -14,7 +14,6 @@ from core_user_registration_app.components.user_template_version_manager.access_
 from core_user_registration_app.components.user_template_version_manager.models import (
     UserTemplateVersionManager,
 )
-import core_main_app.commons.exceptions as exceptions
 
 
 @access_control(can_write)

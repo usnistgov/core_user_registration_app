@@ -1,13 +1,20 @@
 """ Initialize permissions for core user registration app.
 """
 import logging
+from os.path import join
 
 from django.contrib.auth.models import Group, Permission
+from django.contrib.staticfiles import finders
 from django.core.exceptions import ObjectDoesNotExist
 from django_celery_beat.models import CrontabSchedule, PeriodicTask
 
 import core_main_app.permissions.rights as main_rights
 import core_user_registration_app.permissions.rights as registration_rights
+from core_main_app.commons import exceptions
+from core_main_app.components.xsl_transformation import api as xslt_transformation_api
+from core_main_app.components.xsl_transformation.models import XslTransformation
+from core_main_app.system import api as system_api
+from core_main_app.utils.file import read_file_content
 from core_user_registration_app.components.user_template_version_manager import (
     api as user_version_manager_api,
 )
@@ -15,25 +22,15 @@ from core_user_registration_app.settings import (
     REGISTRY_XSD_USER_FILENAME,
     REGISTRY_XSD_USER_FILEPATH,
 )
-from core_user_registration_app.system import api as registry_system_api
-from core_user_registration_app.tasks import delete_user_data_structure
-
-logger = logging.getLogger(__name__)
-
-from os.path import join
-
-from django.contrib.staticfiles import finders
-
 from core_user_registration_app.settings import (
     XSL_FOLDER_PATH,
     LIST_XSL_FILENAME,
     DETAIL_XSL_FILENAME,
 )
-from core_main_app.commons import exceptions
-from core_main_app.system import api as system_api
-from core_main_app.components.xsl_transformation import api as xslt_transformation_api
-from core_main_app.components.xsl_transformation.models import XslTransformation
-from core_main_app.utils.file import read_file_content
+from core_user_registration_app.system import api as registry_system_api
+from core_user_registration_app.tasks import delete_user_data_structure
+
+logger = logging.getLogger(__name__)
 
 
 def init_registration_app():
