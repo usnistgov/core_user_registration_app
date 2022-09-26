@@ -12,7 +12,10 @@ class Register(models.Model):
         verbose_name = "core_user_registration_app"
         default_permissions = ()
         permissions = (
-            (rights.register_access, get_formatted_name(rights.register_access)),
+            (
+                rights.register_access,
+                get_formatted_name(rights.register_access),
+            ),
             (
                 rights.register_data_structure_access,
                 get_formatted_name(rights.register_data_structure_access),

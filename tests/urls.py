@@ -44,7 +44,9 @@ urlpatterns = [
         name="core_user_registration_app_set_current_template_version",
     ),
     re_path(
-        r"^save-data$", user_ajax.save_data, name="core_user_registration_app_save_data"
+        r"^save-data$",
+        user_ajax.save_data,
+        name="core_user_registration_app_save_data",
     ),
     re_path(
         r"^template/(?P<pk>\w+)/download/$",

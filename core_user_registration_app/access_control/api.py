@@ -101,7 +101,9 @@ def can_write(func, *args, **kwargs):
     if user.is_superuser:
         return func(*args, **kwargs)
 
-    document = next((arg for arg in args if isinstance(arg, UserDataStructure)), None)
+    document = next(
+        (arg for arg in args if isinstance(arg, UserDataStructure)), None
+    )
     if document.user != str(user.id):
         raise AccessControlError(
             "The user doesn't have enough rights to access this document."

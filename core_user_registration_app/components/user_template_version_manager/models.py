@@ -32,7 +32,9 @@ class UserTemplateVersionManager(TemplateVersionManager):
 
         """
         try:
-            return UserTemplateVersionManager.objects.get(pk=version_manager_id)
+            return UserTemplateVersionManager.objects.get(
+                pk=version_manager_id
+            )
         except ObjectDoesNotExist as e:
             raise exceptions.DoesNotExist(str(e))
         except Exception as e:

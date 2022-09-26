@@ -28,7 +28,10 @@ from core_website_app.views.user.forms import RequestAccountForm
 def request_new_account(request):
     assets = {
         "js": [
-            {"path": "core_website_app/user/js/user_account_req.js", "is_raw": False}
+            {
+                "path": "core_website_app/user/js/user_account_req.js",
+                "is_raw": False,
+            }
         ],
         "css": ["core_website_app/user/css/list.css"],
     }
@@ -39,7 +42,9 @@ def request_new_account(request):
             # Call the API
             try:
                 request_form_data = request_form.cleaned_data
-                version_manager = user_version_manager_api.get_default_version_manager()
+                version_manager = (
+                    user_version_manager_api.get_default_version_manager()
+                )
 
                 template = version_manager[0].current_version
                 name = request.POST["username"]
@@ -60,8 +65,8 @@ def request_new_account(request):
                 user_data_structure_api.upsert(user_data_structure, user)
                 objectid = user_data_structure.id
 
-                account_request = account_request_metadata_api.create_account_request(
-                    user
+                account_request = (
+                    account_request_metadata_api.create_account_request(user)
                 )
                 messages.add_message(
                     request,
@@ -81,30 +86,43 @@ def request_new_account(request):
                 error_template = get_template(
                     "core_website_app/user/request_error.html"
                 )
-                error_box = error_template.render({"error_message": error_message})
+                error_box = error_template.render(
+                    {"error_message": error_message}
+                )
 
                 return render(
                     request,
                     "core_website_app/user/request_new_account.html",
                     assets=assets,
-                    context={"request_form": request_form, "action_result": error_box},
+                    context={
+                        "request_form": request_form,
+                        "action_result": error_box,
+                    },
                 )
             except ValidationError as e:
-                error_message = "The following error(s) occurred during " "validation:"
+                error_message = (
+                    "The following error(s) occurred during " "validation:"
+                )
                 error_items = [str(error) for error in e.messages]
 
                 error_template = get_template(
                     "core_website_app/user/request_error.html"
                 )
                 error_box = error_template.render(
-                    {"error_message": error_message, "error_items": error_items}
+                    {
+                        "error_message": error_message,
+                        "error_items": error_items,
+                    }
                 )
 
                 return render(
                     request,
                     "core_website_app/user/request_new_account.html",
                     assets=assets,
-                    context={"request_form": request_form, "action_result": error_box},
+                    context={
+                        "request_form": request_form,
+                        "action_result": error_box,
+                    },
                 )
 
     else:

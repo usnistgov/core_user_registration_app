@@ -12,7 +12,9 @@ from core_main_app.components.workspace.models import Workspace
 class UserMetadata(AbstractData):
     """Metadata object"""
 
-    template = models.ForeignKey(Template, blank=False, on_delete=models.CASCADE)
+    template = models.ForeignKey(
+        Template, blank=False, on_delete=models.CASCADE
+    )
     user_id = models.CharField(max_length=200)
     workspace = models.ForeignKey(
         Workspace, blank=True, on_delete=models.SET_NULL, null=True
@@ -23,7 +25,12 @@ class UserMetadata(AbstractData):
         verbose_name_plural = "User metadata"
         indexes = [
             models.Index(
-                fields=["title", "last_modification_date", "template", "user_id"]
+                fields=[
+                    "title",
+                    "last_modification_date",
+                    "template",
+                    "user_id",
+                ]
             ),
         ]
 

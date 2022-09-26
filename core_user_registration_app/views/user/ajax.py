@@ -21,7 +21,9 @@ from core_user_registration_app.components.user_data_structure import (
     api as user_data_structure_api,
 )
 from core_user_registration_app.components.user_metadata import api as data_api
-from core_user_registration_app.components.user_metadata.models import UserMetadata
+from core_user_registration_app.components.user_metadata.models import (
+    UserMetadata,
+)
 from xml_utils.xsd_tree.xsd_tree import XSDTree
 
 
@@ -32,10 +34,14 @@ def save_data(request):
         # get user data structure
         user_data_structure_id = request.POST["id"]
         account_request_metadata_id = request.POST["metadata"]
-        user_data_structure = user_data_structure_api.get_by_id(user_data_structure_id)
+        user_data_structure = user_data_structure_api.get_by_id(
+            user_data_structure_id
+        )
 
         # generate xml data
-        xml_data = render_xml(user_data_structure.data_structure_element_root, request)
+        xml_data = render_xml(
+            user_data_structure.data_structure_element_root, request
+        )
 
         # update user data structure data
         user_data_structure.form_string = xml_data
@@ -80,10 +86,13 @@ def save_data(request):
             )
     except Exception as e:
         message = str(e).replace('"', "'")
-        return HttpResponseBadRequest(message, content_type="application/javascript")
+        return HttpResponseBadRequest(
+            message, content_type="application/javascript"
+        )
 
     return HttpResponse(
-        json.dumps({"data_id": str(data.id)}), content_type="application/javascript"
+        json.dumps({"data_id": str(data.id)}),
+        content_type="application/javascript",
     )
 
 
@@ -133,7 +142,9 @@ def get_data_structure_element_value(request):
         return HttpResponseBadRequest()
 
     try:
-        element = data_structure_element_api.get_by_id(request.GET["id"], request)
+        element = data_structure_element_api.get_by_id(
+            request.GET["id"], request
+        )
         element_value = element.value
 
         if element.tag == "module":
@@ -143,7 +154,8 @@ def get_data_structure_element_value(request):
             }
 
         return HttpResponse(
-            json.dumps({"value": element_value}), content_type="application/json"
+            json.dumps({"value": element_value}),
+            content_type="application/json",
         )
     except (AccessControlError, DoesNotExist) as exc:
         return HttpResponseBadRequest(json.dumps({"message": str(exc)}))

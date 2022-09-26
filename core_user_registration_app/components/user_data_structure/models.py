@@ -15,7 +15,9 @@ class UserDataStructure(DataStructure):
     """user data structure."""
 
     form_string = models.TextField(blank=True)
-    data = models.ForeignKey(Data, blank=True, on_delete=models.CASCADE, null=True)
+    data = models.ForeignKey(
+        Data, blank=True, on_delete=models.CASCADE, null=True
+    )
 
     @staticmethod
     def get_permission():
@@ -30,7 +32,9 @@ class UserDataStructure(DataStructure):
         try:
             return self.save()
         except IntegrityError:
-            raise exceptions.ModelError("Unable to save the document: not unique.")
+            raise exceptions.ModelError(
+                "Unable to save the document: not unique."
+            )
         except Exception as ex:
             raise exceptions.ModelError(str(ex))
 

@@ -2,8 +2,12 @@
 """
 from core_main_app.components.template.models import Template
 from core_main_app.components.workspace.models import Workspace
-from core_main_app.utils.integration_tests.fixture_interface import FixtureInterface
-from core_user_registration_app.components.user_metadata.models import UserMetadata
+from core_main_app.utils.integration_tests.fixture_interface import (
+    FixtureInterface,
+)
+from core_user_registration_app.components.user_metadata.models import (
+    UserMetadata,
+)
 
 
 class DataFixtures(FixtureInterface):
@@ -33,15 +37,24 @@ class DataFixtures(FixtureInterface):
         """
         # NOTE: no xml_content to avoid using unsupported GridFS mock
         self.data_1 = UserMetadata(
-            template=self.template, user_id="1", dict_content=None, title="title"
+            template=self.template,
+            user_id="1",
+            dict_content=None,
+            title="title",
         )
         self.data_1.save()
         self.data_2 = UserMetadata(
-            template=self.template, user_id="2", dict_content=None, title="title2"
+            template=self.template,
+            user_id="2",
+            dict_content=None,
+            title="title2",
         )
         self.data_2.save()
         self.data_3 = UserMetadata(
-            template=self.template, user_id="1", dict_content=None, title="title3"
+            template=self.template,
+            user_id="1",
+            dict_content=None,
+            title="title3",
         )
         self.data_3.save()
         self.data_collection = [self.data_1, self.data_2, self.data_3]
@@ -101,9 +114,13 @@ class AccessControlDataFixture(FixtureInterface):
 
         content = {"root": {"element": "value2"}}
 
-        self.data_1 = UserMetadata(template=self.template, title="Data 1", user_id="1")
+        self.data_1 = UserMetadata(
+            template=self.template, title="Data 1", user_id="1"
+        )
         self.data_1.save()
-        self.data_2 = UserMetadata(template=self.template, title="Data 2", user_id="2")
+        self.data_2 = UserMetadata(
+            template=self.template, title="Data 2", user_id="2"
+        )
         self.data_2.save()
         self.data_3 = UserMetadata(
             template=self.template,

@@ -31,7 +31,9 @@ from core_main_app.views.common.ajax import (
 from core_main_app.views.common.views import CommonView
 from core_main_app.views.common.views import read_xsd_file
 from core_main_app.views.user.views import get_context_manage_template_versions
-from core_user_registration_app.components.user_metadata import api as metadata_api
+from core_user_registration_app.components.user_metadata import (
+    api as metadata_api,
+)
 from core_user_registration_app.components.user_template_version_manager import (
     api as user_version_manager_api,
 )
@@ -55,7 +57,10 @@ def user_requests(request):
 
     assets = {
         "js": [
-            {"path": "core_website_app/admin/js/user_requests.js", "is_raw": False},
+            {
+                "path": "core_website_app/admin/js/user_requests.js",
+                "is_raw": False,
+            },
             {
                 "path": "core_user_registration_app/admin/js/view_meta.js",
                 "is_raw": False,
@@ -97,8 +102,14 @@ class ViewMetaData(CommonView):
 
             assets = {
                 "js": [
-                    {"path": "core_main_app/common/js/XMLTree.js", "is_raw": False},
-                    {"path": "core_main_app/user/js/data/detail.js", "is_raw": False},
+                    {
+                        "path": "core_main_app/common/js/XMLTree.js",
+                        "is_raw": False,
+                    },
+                    {
+                        "path": "core_main_app/user/js/data/detail.js",
+                        "is_raw": False,
+                    },
                 ],
                 "css": ["core_main_app/common/css/XMLTree.css"],
             }
@@ -114,11 +125,19 @@ class ViewMetaData(CommonView):
                         }
                     ]
                 )
-                assets["css"].append("core_file_preview_app/user/css/file_preview.css")
-                modals.append("core_file_preview_app/user/file_preview_modal.html")
+                assets["css"].append(
+                    "core_file_preview_app/user/css/file_preview.css"
+                )
+                modals.append(
+                    "core_file_preview_app/user/file_preview_modal.html"
+                )
 
             return self.common_render(
-                request, self.template, context=context, assets=assets, modals=modals
+                request,
+                self.template,
+                context=context,
+                assets=assets,
+                modals=modals,
             )
         except exceptions.DoesNotExist:
             error_message = "Data not found"
@@ -148,11 +167,17 @@ def manage_user_templates(request):
     Returns:
 
     """
-    templates = user_version_manager_api.get_global_version_managers(request=request)
+    templates = user_version_manager_api.get_global_version_managers(
+        request=request
+    )
     context = {
         "object_name": "Template",
-        "available": [template for template in templates if not template.is_disabled],
-        "disabled": [template for template in templates if template.is_disabled],
+        "available": [
+            template for template in templates if not template.is_disabled
+        ],
+        "disabled": [
+            template for template in templates if template.is_disabled
+        ],
         "come_from_user": "True",
     }
 
@@ -207,7 +232,9 @@ def manage_user_template_versions(request, version_manager_id):
         )
         context = get_context_manage_template_versions(version_manager)
         if "core_parser_app" in settings.INSTALLED_APPS:
-            context.update({"module_url": "admin:core_parser_app_template_modules"})
+            context.update(
+                {"module_url": "admin:core_parser_app_template_modules"}
+            )
 
         assets = {
             "js": [
@@ -267,14 +294,21 @@ def upload_template(request):
                 "path": "core_main_app/admin/js/templates/upload/dependencies.js",
                 "is_raw": False,
             },
-            {"path": "core_main_app/common/js/backtoprevious.js", "is_raw": True},
+            {
+                "path": "core_main_app/common/js/backtoprevious.js",
+                "is_raw": True,
+            },
         ]
     }
 
     context = {
         "object_name": "Template",
-        "url": reverse("core-admin:core_user_registration_app_upload_template"),
-        "redirect_url": reverse("core-admin:core_user_registration_app_templates"),
+        "url": reverse(
+            "core-admin:core_user_registration_app_upload_template"
+        ),
+        "redirect_url": reverse(
+            "core-admin:core_user_registration_app_templates"
+        ),
     }
 
     # method is POST

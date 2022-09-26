@@ -6,7 +6,9 @@ import pytz
 
 from core_main_app.commons import exceptions as exceptions
 from core_main_app.utils.xml import validate_xml_data
-from core_user_registration_app.components.user_metadata.models import UserMetadata
+from core_user_registration_app.components.user_metadata.models import (
+    UserMetadata,
+)
 from xml_utils.xsd_tree.xsd_tree import XSDTree
 
 
@@ -33,7 +35,9 @@ def upsert(data, request):
 
     """
     if data.xml_content is None:
-        raise exceptions.ApiError("Unable to save data: xml_content field is not set.")
+        raise exceptions.ApiError(
+            "Unable to save data: xml_content field is not set."
+        )
 
     data.last_modification_date = datetime.datetime.now(pytz.utc)
     check_xml_file_is_valid(data, request=request)

@@ -19,13 +19,17 @@ class TestsAccountRequestMetadataGet(TestCase):
     @patch(
         "core_user_registration_app.components.account_request_metadata.api.get_account_request_metadata_by_id"
     )
-    def test_account_request_metadata_get_return_request_object(self, mock_get_by_id):
+    def test_account_request_metadata_get_return_request_object(
+        self, mock_get_by_id
+    ):
         # Arrange
         request_id = "1"
         mock_get_by_id.return_value = _create_account_request_metadata()
         # Act
-        result = account_request_metadata_api.get_account_request_metadata_by_id(
-            request_id
+        result = (
+            account_request_metadata_api.get_account_request_metadata_by_id(
+                request_id
+            )
         )
         # Assert
         self.assertIsInstance(result, AccountRequestMetadata)

@@ -31,7 +31,9 @@ class TestTemplateVersionManagerInsert(MongoIntegrationBaseTestCase):
         self.superuser1 = create_mock_user(user_id="1", is_superuser=True)
         self.fixture.insert_data()
 
-    def test_insert_user_template_as_anonymous_raises_access_control_error(self):
+    def test_insert_user_template_as_anonymous_raises_access_control_error(
+        self,
+    ):
         mock_request = create_mock_request(user=self.anonymous_user)
         with self.assertRaises(AccessControlError):
             user_template_vm_api.insert(
@@ -40,7 +42,9 @@ class TestTemplateVersionManagerInsert(MongoIntegrationBaseTestCase):
                 request=mock_request,
             )
 
-    def test_insert_global_template_as_anonymous_raises_access_control_error(self):
+    def test_insert_global_template_as_anonymous_raises_access_control_error(
+        self,
+    ):
         mock_request = create_mock_request(user=self.anonymous_user)
         with self.assertRaises(AccessControlError):
             user_template_vm_api.insert(
@@ -52,10 +56,14 @@ class TestTemplateVersionManagerInsert(MongoIntegrationBaseTestCase):
     def test_insert_own_template_as_user_saves(self):
         mock_request = create_mock_request(user=self.user1)
         user_template_vm_api.insert(
-            self.fixture.user1_utvm, self.fixture.user1_template, request=mock_request
+            self.fixture.user1_utvm,
+            self.fixture.user1_template,
+            request=mock_request,
         )
 
-    def test_insert_other_users_template_as_user_raises_access_control_error(self):
+    def test_insert_other_users_template_as_user_raises_access_control_error(
+        self,
+    ):
         mock_request = create_mock_request(user=self.user1)
         with self.assertRaises(AccessControlError):
             user_template_vm_api.insert(
@@ -76,10 +84,14 @@ class TestTemplateVersionManagerInsert(MongoIntegrationBaseTestCase):
     def test_insert_own_template_as_staff_saves(self):
         mock_request = create_mock_request(user=self.staff_user1)
         user_template_vm_api.insert(
-            self.fixture.user1_utvm, self.fixture.user1_template, request=mock_request
+            self.fixture.user1_utvm,
+            self.fixture.user1_template,
+            request=mock_request,
         )
 
-    def test_insert_other_users_template_as_staff_raises_access_control_error(self):
+    def test_insert_other_users_template_as_staff_raises_access_control_error(
+        self,
+    ):
         mock_request = create_mock_request(user=self.staff_user1)
         with self.assertRaises(AccessControlError):
             user_template_vm_api.insert(
@@ -91,25 +103,33 @@ class TestTemplateVersionManagerInsert(MongoIntegrationBaseTestCase):
     def test_insert_global_template_as_staff_saves(self):
         mock_request = create_mock_request(user=self.staff_user1)
         user_template_vm_api.insert(
-            self.fixture.global_tvm, self.fixture.global_template, request=mock_request
+            self.fixture.global_tvm,
+            self.fixture.global_template,
+            request=mock_request,
         )
 
     def test_insert_own_template_as_superuser_saves(self):
         mock_request = create_mock_request(user=self.superuser1)
         user_template_vm_api.insert(
-            self.fixture.user1_utvm, self.fixture.user1_template, request=mock_request
+            self.fixture.user1_utvm,
+            self.fixture.user1_template,
+            request=mock_request,
         )
 
     def test_insert_other_users_template_as_superuser_saves(self):
         mock_request = create_mock_request(user=self.superuser1)
         user_template_vm_api.insert(
-            self.fixture.user2_utvm, self.fixture.user2_template, request=mock_request
+            self.fixture.user2_utvm,
+            self.fixture.user2_template,
+            request=mock_request,
         )
 
     def test_insert_global_template_as_superuser_saves(self):
         mock_request = create_mock_request(user=self.superuser1)
         user_template_vm_api.insert(
-            self.fixture.global_tvm, self.fixture.global_template, request=mock_request
+            self.fixture.global_tvm,
+            self.fixture.global_template,
+            request=mock_request,
         )
 
 
@@ -124,10 +144,14 @@ class TestTemplateGetGlobalVersionManagers(MongoIntegrationBaseTestCase):
         self.superuser1 = create_mock_user(user_id="1", is_superuser=True)
         self.fixture.insert_data()
 
-    def test_get_global_version_managers_as_anonymous_raises_acces_control_error(self):
+    def test_get_global_version_managers_as_anonymous_raises_acces_control_error(
+        self,
+    ):
         mock_request = create_mock_request(user=self.anonymous_user)
         with self.assertRaises(AccessControlError):
-            user_template_vm_api.get_global_version_managers(request=mock_request)
+            user_template_vm_api.get_global_version_managers(
+                request=mock_request
+            )
 
     def test_get_global_version_managers_as_user_returns_global_tvm(self):
         mock_request = create_mock_request(user=self.user1)

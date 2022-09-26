@@ -2,9 +2,13 @@
 """
 
 from core_main_app.components.template.models import Template
-from core_main_app.components.version_manager.utils import get_latest_version_name
+from core_main_app.components.version_manager.utils import (
+    get_latest_version_name,
+)
 from core_main_app.utils.xml import is_schema_valid, get_hash
-from core_parser_app.components.data_structure.models import DataStructureElement
+from core_parser_app.components.data_structure.models import (
+    DataStructureElement,
+)
 from core_user_registration_app.components.user_template_version_manager.models import (
     UserTemplateVersionManager,
 )
@@ -55,6 +59,8 @@ def get_active_global_version_manager_by_title(version_manager_title):
     Returns:
 
     """
-    return UserTemplateVersionManager.get_active_global_version_manager_by_title(
-        version_manager_title
+    return (
+        UserTemplateVersionManager.get_active_global_version_manager_by_title(
+            version_manager_title
+        )
     )

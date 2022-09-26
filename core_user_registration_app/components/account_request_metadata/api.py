@@ -81,7 +81,9 @@ def insert_metadata(user, account_id, metadata):
 
     """
     # NOTE: used queryset.update to change metadata as assignment would not save change in database
-    AccountRequestMetadata.objects.filter(pk=account_id).update(metadata=metadata)
+    AccountRequestMetadata.objects.filter(pk=account_id).update(
+        metadata=metadata
+    )
 
 
 def create_account_request(user):
@@ -110,7 +112,9 @@ def create_account_request(user):
         )
 
         context = {"URI": SERVER_URI}
-        template_path = "core_website_app/admin/email/request_account_for_admin.html"
+        template_path = (
+            "core_website_app/admin/email/request_account_for_admin.html"
+        )
         send_mail_api.send_mail_to_administrators(
             subject="New Account Request",
             path_to_template=template_path,

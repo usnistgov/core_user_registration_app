@@ -1,7 +1,9 @@
 """ Fixtures file for template version manager
 """
 from core_main_app.components.template.models import Template
-from core_main_app.utils.integration_tests.fixture_interface import FixtureInterface
+from core_main_app.utils.integration_tests.fixture_interface import (
+    FixtureInterface,
+)
 from core_user_registration_app.components.user_template_version_manager.models import (
     UserTemplateVersionManager,
 )

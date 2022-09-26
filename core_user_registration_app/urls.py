@@ -37,6 +37,8 @@ urlpatterns = [
         name="core_user_registration_app_data_structure_element_value",
     ),
     re_path(
-        r"^save-data$", user_ajax.save_data, name="core_user_registration_app_save_data"
+        r"^save-data$",
+        user_ajax.save_data,
+        name="core_user_registration_app_save_data",
     ),
 ]

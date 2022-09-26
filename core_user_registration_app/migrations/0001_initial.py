@@ -36,7 +36,10 @@ class Migration(migrations.Migration):
                 "verbose_name": "core_user_registration_app",
                 "permissions": (
                     ("access_register", "Can access register"),
-                    ("access_user_data_structure", "Can access user data structure"),
+                    (
+                        "access_user_data_structure",
+                        "Can access user data structure",
+                    ),
                 ),
                 "default_permissions": (),
             },
@@ -102,7 +105,9 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "vector_column",
-                    django.contrib.postgres.search.SearchVectorField(null=True),
+                    django.contrib.postgres.search.SearchVectorField(
+                        null=True
+                    ),
                 ),
                 (
                     "creation_date",
@@ -199,7 +204,12 @@ class Migration(migrations.Migration):
         migrations.AddIndex(
             model_name="usermetadata",
             index=models.Index(
-                fields=["title", "last_modification_date", "template", "user_id"],
+                fields=[
+                    "title",
+                    "last_modification_date",
+                    "template",
+                    "user_id",
+                ],
                 name="core_user_r_title_cc1330_idx",
             ),
         ),

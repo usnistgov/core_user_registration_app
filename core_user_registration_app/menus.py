@@ -19,4 +19,6 @@ templates_children = (
     ),
 )
 
-Menu.add_item("admin", MenuItem("USER TEMPLATES", None, children=templates_children))
+Menu.add_item(
+    "admin", MenuItem("USER TEMPLATES", None, children=templates_children)
+)

@@ -14,7 +14,9 @@ from core_main_app.utils.tests_tools.MockUser import create_mock_user
 from core_user_registration_app.components.user_metadata.api import (
     check_xml_file_is_valid,
 )
-from core_user_registration_app.components.user_metadata.models import UserMetadata
+from core_user_registration_app.components.user_metadata.models import (
+    UserMetadata,
+)
 from tests.components.metadata.fixtures.fixtures import (
     DataFixtures,
     AccessControlDataFixture,
@@ -61,8 +63,12 @@ class TestDataGetAll(MongoIntegrationBaseTestCase):
         # Act
         ascending_result = UserMetadata.get_all(ascending_order_by_field)
         # Assert
-        self.assertTrue(self.fixture.data_1.title == ascending_result.all()[0].title)
-        self.assertTrue(self.fixture.data_2.title == ascending_result.all()[1].title)
+        self.assertTrue(
+            self.fixture.data_1.title == ascending_result.all()[0].title
+        )
+        self.assertTrue(
+            self.fixture.data_2.title == ascending_result.all()[1].title
+        )
 
     def test_data_get_all_descending_sorting(self):
         # Arrange
@@ -85,10 +91,16 @@ class TestDataGetAll(MongoIntegrationBaseTestCase):
         descending_order_by_multi_field = ["+title", "-user_id"]
         # Act
         ascending_result = UserMetadata.get_all(ascending_order_by_multi_field)
-        descending_result = UserMetadata.get_all(descending_order_by_multi_field)
+        descending_result = UserMetadata.get_all(
+            descending_order_by_multi_field
+        )
         # Assert
-        self.assertEqual(self.fixture.data_4.user_id, ascending_result.all()[4].user_id)
-        self.assertEqual(self.fixture.data_5.user_id, ascending_result.all()[3].user_id)
+        self.assertEqual(
+            self.fixture.data_4.user_id, ascending_result.all()[4].user_id
+        )
+        self.assertEqual(
+            self.fixture.data_5.user_id, ascending_result.all()[3].user_id
+        )
 
         self.assertEqual(
             self.fixture.data_4.user_id, descending_result.all()[3].user_id

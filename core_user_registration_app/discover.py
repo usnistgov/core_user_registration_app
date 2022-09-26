@@ -11,8 +11,12 @@ from django_celery_beat.models import CrontabSchedule, PeriodicTask
 import core_main_app.permissions.rights as main_rights
 import core_user_registration_app.permissions.rights as registration_rights
 from core_main_app.commons import exceptions
-from core_main_app.components.xsl_transformation import api as xslt_transformation_api
-from core_main_app.components.xsl_transformation.models import XslTransformation
+from core_main_app.components.xsl_transformation import (
+    api as xslt_transformation_api,
+)
+from core_main_app.components.xsl_transformation.models import (
+    XslTransformation,
+)
 from core_main_app.system import api as system_api
 from core_main_app.utils.file import read_file_content
 from core_user_registration_app.components.user_template_version_manager import (
@@ -50,7 +54,9 @@ def init_registration_app():
         # Init the xslt
         _init_xslt()
     except Exception as e:
-        logger.error("Impossible to init the registration app: {0}".format(str(e)))
+        logger.error(
+            "Impossible to init the registration app: {0}".format(str(e))
+        )
 
 
 def _init_permissions():
@@ -96,7 +102,9 @@ def _add_user_template():
             "Please configure the REGISTRY_XSD_USER_FILEPATH setting in your project."
         )
     try:
-        registry_system_api.get_active_global_version_manager_by_title(xsd_filename)
+        registry_system_api.get_active_global_version_manager_by_title(
+            xsd_filename
+        )
     except exceptions.DoesNotExist:
         default_xsd_path = finders.find(xsd_filepath)
         xsd_data = read_file_content(default_xsd_path)
@@ -159,7 +167,9 @@ def _get_or_create_xslt(filename):
         )
 
 
-def _bind_template_xslt(template_id, list_xslt, default_detail_xslt, list_detail_xslt):
+def _bind_template_xslt(
+    template_id, list_xslt, default_detail_xslt, list_detail_xslt
+):
     """Bind the registry template with the XSLTs.
 
     Args:
@@ -185,7 +195,9 @@ def _bind_template_xslt(template_id, list_xslt, default_detail_xslt, list_detail
             list_detail_xslt=list_detail_xslt,
         )
     except Exception as e:
-        raise Exception("Impossible to bind the template with XSLTs : " + str(e))
+        raise Exception(
+            "Impossible to bind the template with XSLTs : " + str(e)
+        )
 
 
 def _init_periodic_tasks():

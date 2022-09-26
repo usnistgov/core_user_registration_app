@@ -3,7 +3,9 @@
 
 from django.db import models
 
-from core_user_registration_app.components.user_metadata.models import UserMetadata
+from core_user_registration_app.components.user_metadata.models import (
+    UserMetadata,
+)
 from core_website_app.components.account_request.models import AccountRequest
 
 

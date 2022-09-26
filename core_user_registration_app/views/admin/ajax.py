@@ -30,7 +30,9 @@ class CurrentTemplateVersion(AbstractStatusTemplateVersion):
 
             TemplateVersion
         """
-        return version_manager_api.set_current(template_object, request=self.request)
+        return version_manager_api.set_current(
+            template_object, request=self.request
+        )
 
 
 @staff_member_required
@@ -45,8 +47,12 @@ def set_current_template_version_from_version_manager(request):
     """
     try:
 
-        user_version_manager_api.set_default_version_manager(request.GET["id"], request)
+        user_version_manager_api.set_default_version_manager(
+            request.GET["id"], request
+        )
     except Exception as e:
-        return HttpResponseBadRequest(str(e), content_type="application/javascript")
+        return HttpResponseBadRequest(
+            str(e), content_type="application/javascript"
+        )
 
     return HttpResponse(content_type="application/javascript")

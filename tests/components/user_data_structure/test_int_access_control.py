@@ -9,7 +9,9 @@ from core_main_app.utils.integration_tests.integration_base_test_case import (
     MongoIntegrationBaseTestCase,
 )
 from core_main_app.utils.tests_tools.MockUser import create_mock_user
-from core_parser_app.components.data_structure.models import DataStructureElement
+from core_parser_app.components.data_structure.models import (
+    DataStructureElement,
+)
 from core_user_registration_app.components.user_data_structure.models import (
     UserDataStructure,
 )
@@ -26,7 +28,9 @@ class TestUserDataStructureGetAll(MongoIntegrationBaseTestCase):
     def test_get_all_as_superuser_returns_all_data_structure(self):
         mock_user = create_mock_user("1", is_staff=True, is_superuser=True)
         result = user_data_structure_api.get_all(mock_user)
-        self.assertTrue(all(isinstance(item, UserDataStructure) for item in result))
+        self.assertTrue(
+            all(isinstance(item, UserDataStructure) for item in result)
+        )
 
     def test_get_all_as_user_raises_error(self):
         mock_user = create_mock_user("1")
@@ -41,10 +45,14 @@ class TestUserDataStructureGetAll(MongoIntegrationBaseTestCase):
 class TestUserDataStructureDelete(MongoIntegrationBaseTestCase):
     fixture = fixture_data_structure
 
-    def test_delete_others_data_structure_as_superuser_deletes_data_structure(self):
+    def test_delete_others_data_structure_as_superuser_deletes_data_structure(
+        self,
+    ):
         data_structure = self.fixture.data_structure_3
         mock_user = create_mock_user(
-            self.fixture.data_structure_1.user, is_staff=True, is_superuser=True
+            self.fixture.data_structure_1.user,
+            is_staff=True,
+            is_superuser=True,
         )
         user_data_structure_api.delete(data_structure, mock_user)
 
@@ -54,7 +62,9 @@ class TestUserDataStructureDelete(MongoIntegrationBaseTestCase):
         user_data_structure_api.delete(data_structure, mock_user)
 
 
-class TestUserDataStructureUpdateDataStructureRoot(MongoIntegrationBaseTestCase):
+class TestUserDataStructureUpdateDataStructureRoot(
+    MongoIntegrationBaseTestCase
+):
     fixture = fixture_data_structure
 
     def test_update_others_data_structure_root_as_superuser_updates_data_structure(
@@ -64,7 +74,9 @@ class TestUserDataStructureUpdateDataStructureRoot(MongoIntegrationBaseTestCase)
         new_data_structure_element_root = DataStructureElement()
         new_data_structure_element_root.save()
         mock_user = create_mock_user(
-            self.fixture.data_structure_2.user, is_staff=True, is_superuser=True
+            self.fixture.data_structure_2.user,
+            is_staff=True,
+            is_superuser=True,
         )
         user_data_structure_api.update_data_structure_root(
             data_structure, new_data_structure_element_root, mock_user
@@ -109,7 +121,9 @@ class TestUserDataStructureGetByDataId(MongoIntegrationBaseTestCase):
     def test_get_by_data_id_as_superuser_returns_data_structure(self):
 
         mock_user = create_mock_user(
-            self.fixture.data_structure_3.user, is_staff=True, is_superuser=True
+            self.fixture.data_structure_3.user,
+            is_staff=True,
+            is_superuser=True,
         )
         data_structure = user_data_structure_api.get_by_data_id(
             self.fixture.data.id, mock_user
@@ -128,7 +142,9 @@ class TestUserDataStructureGetByDataId(MongoIntegrationBaseTestCase):
     def test_get_by_data_id_as_user_non_owner_raises_error(self):
         mock_user = create_mock_user(self.fixture.data_structure_3.user)
         with self.assertRaises(AccessControlError):
-            user_data_structure_api.get_by_data_id(self.fixture.data.id, mock_user)
+            user_data_structure_api.get_by_data_id(
+                self.fixture.data.id, mock_user
+            )
 
     def test_get_by_data_id_as_anonymous_user_raises_error(self):
         with self.assertRaises(AccessControlError):

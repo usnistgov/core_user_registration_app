@@ -31,7 +31,9 @@ LIST_XSL_FILENAME = getattr(settings, "LIST_XSL_FILENAME", "registry-list.xsl")
 """" str : List xsl filename used for the initialisation.
 """
 
-DETAIL_XSL_FILENAME = getattr(settings, "DETAIL_XSL_FILENAME", "registry-detail.xsl")
+DETAIL_XSL_FILENAME = getattr(
+    settings, "DETAIL_XSL_FILENAME", "registry-detail.xsl"
+)
 """  str : Detail xsl filename used for the initialisation.
 """
 
@@ -43,7 +45,9 @@ REGISTRY_XSD_USER_FILEPATH = getattr(
 """ str: Registry xsd path used for the initialisation.
 """
 
-REGISTRY_XSD_USER_FILENAME = getattr(settings, "REGISTRY_XSD_USER_FILENAME", "user.xsd")
+REGISTRY_XSD_USER_FILENAME = getattr(
+    settings, "REGISTRY_XSD_USER_FILENAME", "user.xsd"
+)
 """ str: Registry xsd filename used for the initialisation.
 """
 

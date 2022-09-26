@@ -17,7 +17,9 @@ from core_user_registration_app.components.account_request_metadata.models impor
 from core_user_registration_app.components.user_data_structure.models import (
     UserDataStructure,
 )
-from core_user_registration_app.components.user_metadata.models import UserMetadata
+from core_user_registration_app.components.user_metadata.models import (
+    UserMetadata,
+)
 from core_user_registration_app.components.user_template_version_manager.models import (
     UserTemplateVersionManager,
 )
@@ -71,6 +73,8 @@ admin_urls = [
 admin.site.register(UserDataStructure, CustomDataStructureAdmin)
 admin.site.register(AccountRequestMetadata, ViewOnlyAdmin)
 admin.site.register(UserMetadata, ViewOnlyAdmin)
-admin.site.register(UserTemplateVersionManager, CustomTemplateVersionManagerAdmin)
+admin.site.register(
+    UserTemplateVersionManager, CustomTemplateVersionManagerAdmin
+)
 urls = core_admin_site.get_urls()
 core_admin_site.get_urls = lambda: admin_urls + urls

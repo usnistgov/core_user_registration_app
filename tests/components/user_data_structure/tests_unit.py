@@ -33,7 +33,9 @@ class TestUserDataStructureGetById(TestCase):
             user_data_structure_api.get_by_id(1)
 
     @patch.object(UserDataStructure, "get_by_id")
-    def test_user_data_structure_get_by_id_return_data_if_found(self, mock_get):
+    def test_user_data_structure_get_by_id_return_data_if_found(
+        self, mock_get
+    ):
         # Arrange
         mock_data_structure = UserDataStructure(
             user="1", template=Template(), name="name"
@@ -47,7 +49,9 @@ class TestUserDataStructureGetById(TestCase):
 
 class TestUserDataStructureUpsert(TestCase):
     @patch.object(UserDataStructure, "save_object")
-    def test_user_data_structure_upsert_return_data_structure_element(self, mock_save):
+    def test_user_data_structure_upsert_return_data_structure_element(
+        self, mock_save
+    ):
         # Arrange
         mock_data_structure = UserDataStructure(
             user="1", template=Template(), name="name"
@@ -76,7 +80,9 @@ class TestUserDataStructureGetAll(TestCase):
             create_mock_user("1", is_staff=True, is_superuser=True)
         )
         # Assert
-        self.assertTrue(all(isinstance(item, UserDataStructure) for item in result))
+        self.assertTrue(
+            all(isinstance(item, UserDataStructure) for item in result)
+        )
 
 
 def _get_template():
