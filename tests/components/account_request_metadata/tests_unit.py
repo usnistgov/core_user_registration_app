@@ -4,7 +4,7 @@ from unittest.case import TestCase
 
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
-from mock import Mock, patch
+from unittest.mock import Mock, patch
 
 from core_main_app.commons.exceptions import ApiError
 from core_user_registration_app.components.account_request_metadata import (

@@ -2,7 +2,7 @@
 """
 from unittest.case import TestCase
 
-from mock import patch
+from unittest.mock import patch
 
 import core_user_registration_app.components.user_data_structure.api as user_data_structure_api
 from core_main_app.commons import exceptions
