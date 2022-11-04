@@ -72,3 +72,5 @@ DATA_SORTING_FIELDS = ["+title"]
 CUSTOM_NAME = "Curator"
 ENABLE_SAML2_SSO_AUTH = False
 CELERYBEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
+
+CAN_ANONYMOUS_ACCESS_PUBLIC_DOCUMENT = False

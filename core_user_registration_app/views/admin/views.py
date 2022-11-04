@@ -19,7 +19,6 @@ from core_main_app.components.version_manager import api as version_manager_api
 from core_main_app.settings import INSTALLED_APPS
 from core_main_app.utils.labels import get_data_label
 from core_main_app.utils.rendering import admin_render
-from core_main_app.utils.rendering import admin_render as render
 from core_main_app.views.admin.forms import (
     UploadTemplateForm,
     UploadVersionForm,
@@ -76,7 +75,7 @@ def user_requests(request):
         "core_website_app/admin/account_requests/modals/deny_request.html",
     ]
 
-    return render(
+    return admin_render(
         request,
         "core_user_registration_app/admin/user_requests.html",
         assets=assets,
@@ -131,6 +130,8 @@ class ViewMetaData(CommonView):
                 modals.append(
                     "core_file_preview_app/user/file_preview_modal.html"
                 )
+            # Set page title
+            context.update({"page_title": "View Metadata"})
 
             return self.common_render(
                 request,
@@ -152,7 +153,8 @@ class ViewMetaData(CommonView):
             context={
                 "error": "Unable to access the requested "
                 + get_data_label()
-                + ": {}.".format(error_message)
+                + ": {}.".format(error_message),
+                "page_title": "Error",
             },
         )
 

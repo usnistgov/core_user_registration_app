@@ -97,6 +97,7 @@ def request_new_account(request):
                     context={
                         "request_form": request_form,
                         "action_result": error_box,
+                        "page_title": "Error",
                     },
                 )
             except ValidationError as e:
@@ -122,6 +123,7 @@ def request_new_account(request):
                     context={
                         "request_form": request_form,
                         "action_result": error_box,
+                        "page_title": "Error",
                     },
                 )
 
@@ -129,6 +131,8 @@ def request_new_account(request):
         request_form = RequestAccountForm()
 
     context = {"request_form": request_form}
+    # Set page title
+    context.update({"page_title": "Account Request"})
 
     return render(
         request,
@@ -173,6 +177,8 @@ class AccountCreationView(View):
 
     def get(self, request, objectid, accountid):
         context = self.build_context(request, objectid, accountid)
+        # Set page title
+        context.update({"page_title": "Account Creation"})
         return render(
             request,
             "core_user_registration_app/user/account_creation.html",

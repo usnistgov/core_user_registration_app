@@ -144,7 +144,7 @@ class TestTemplateGetGlobalVersionManagers(MongoIntegrationBaseTestCase):
         self.superuser1 = create_mock_user(user_id="1", is_superuser=True)
         self.fixture.insert_data()
 
-    def test_get_global_version_managers_as_anonymous_raises_acces_control_error(
+    def test_get_global_version_managers_as_anonymous_raises_access_control_error(
         self,
     ):
         mock_request = create_mock_request(user=self.anonymous_user)

@@ -8,7 +8,6 @@ from django.http.response import HttpResponseBadRequest, HttpResponse
 
 from core_main_app.access_control.exceptions import AccessControlError
 from core_main_app.commons.exceptions import DoesNotExist
-from core_main_app.components.workspace import api as workspace_api
 from core_main_app.utils.xml import validate_xml_data
 from core_parser_app.components.data_structure_element import (
     api as data_structure_element_api,
@@ -70,7 +69,6 @@ def save_data(request):
             data.template = user_data_structure.template
             data.user_id = str(request.user.id)
             data.id = user_data_structure.pk
-            data.workspace = workspace_api.get_global_workspace()
 
             # set content
             data.xml_content = xml_data
