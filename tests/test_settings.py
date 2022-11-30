@@ -74,3 +74,5 @@ ENABLE_SAML2_SSO_AUTH = False
 CELERYBEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 
 CAN_ANONYMOUS_ACCESS_PUBLIC_DOCUMENT = False
+MONGODB_INDEXING = False
+MONGODB_ASYNC_SAVE = False
