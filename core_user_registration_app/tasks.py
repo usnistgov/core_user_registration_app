@@ -1,11 +1,10 @@
 """User Registration tasks """
 
 import logging
-from datetime import timedelta
 
 from celery import shared_task
-from django.utils import timezone
 
+from core_main_app.utils.datetime import datetime_now, datetime_timedelta
 from core_user_registration_app.components.user_data_structure.models import (
     UserDataStructure,
 )
@@ -33,8 +32,10 @@ def delete_user_data_structure():
             ):
                 if (
                     data_structure_element.creation_date
-                    < timezone.now()
-                    - timedelta(hours=USER_DATA_STRUCTURE_HOURS_THRESHOLD)
+                    < datetime_now()
+                    - datetime_timedelta(
+                        hours=USER_DATA_STRUCTURE_HOURS_THRESHOLD
+                    )
                 ):
                     data_structure_element.delete()
         logger.info("FINISH checking DataStructures.")

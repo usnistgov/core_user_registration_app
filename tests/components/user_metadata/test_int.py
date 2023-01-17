@@ -1,12 +1,9 @@
 """ Unit Test UserMetadata
 """
 
-import datetime
-
-import pytz
-
 from core_main_app.commons import exceptions
 from core_main_app.settings import DATA_SORTING_FIELDS
+from core_main_app.utils.datetime import datetime_now
 from core_main_app.utils.integration_tests.integration_base_test_case import (
     MongoIntegrationBaseTestCase,
 )
@@ -17,7 +14,7 @@ from core_user_registration_app.components.user_metadata.api import (
 from core_user_registration_app.components.user_metadata.models import (
     UserMetadata,
 )
-from tests.components.metadata.fixtures.fixtures import (
+from tests.components.user_metadata.fixtures.fixtures import (
     DataFixtures,
     AccessControlDataFixture,
 )
@@ -132,7 +129,7 @@ def mock_upsert(UserMetadata, user):
             "Unable to save UserMetadata: xml_content field is not set."
         )
 
-    UserMetadata.last_modification_date = datetime.datetime.now(pytz.utc)
+    UserMetadata.last_modification_date = datetime_now()
     check_xml_file_is_valid(UserMetadata)
     return UserMetadata.save()
 

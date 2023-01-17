@@ -1,10 +1,8 @@
 """ Metadata API
 """
-import datetime
-
-import pytz
 
 from core_main_app.commons import exceptions as exceptions
+from core_main_app.utils.datetime import datetime_now
 from core_main_app.utils.xml import validate_xml_data
 from core_user_registration_app.components.user_metadata.models import (
     UserMetadata,
@@ -39,7 +37,7 @@ def upsert(data, request):
             "Unable to save data: xml_content field is not set."
         )
 
-    data.last_modification_date = datetime.datetime.now(pytz.utc)
+    data.last_modification_date = datetime_now()
     check_xml_file_is_valid(data, request=request)
     return data.convert_and_save()
 
