@@ -6,7 +6,7 @@ from django.contrib.auth.models import AnonymousUser
 import core_user_registration_app.components.user_data_structure.api as user_data_structure_api
 from core_main_app.access_control.exceptions import AccessControlError
 from core_main_app.utils.integration_tests.integration_base_test_case import (
-    MongoIntegrationBaseTestCase,
+    IntegrationBaseTestCase,
 )
 from core_main_app.utils.tests_tools.MockUser import create_mock_user
 from core_parser_app.components.data_structure.models import (
@@ -22,7 +22,7 @@ from tests.components.user_data_structure.fixtures.fixtures import (
 fixture_data_structure = UserDataStructureFixtures()
 
 
-class TestUserDataStructureGetAll(MongoIntegrationBaseTestCase):
+class TestUserDataStructureGetAll(IntegrationBaseTestCase):
     fixture = fixture_data_structure
 
     def test_get_all_as_superuser_returns_all_data_structure(self):
@@ -42,7 +42,7 @@ class TestUserDataStructureGetAll(MongoIntegrationBaseTestCase):
             user_data_structure_api.get_all(AnonymousUser())
 
 
-class TestUserDataStructureDelete(MongoIntegrationBaseTestCase):
+class TestUserDataStructureDelete(IntegrationBaseTestCase):
     fixture = fixture_data_structure
 
     def test_delete_others_data_structure_as_superuser_deletes_data_structure(
@@ -62,9 +62,7 @@ class TestUserDataStructureDelete(MongoIntegrationBaseTestCase):
         user_data_structure_api.delete(data_structure, mock_user)
 
 
-class TestUserDataStructureUpdateDataStructureRoot(
-    MongoIntegrationBaseTestCase
-):
+class TestUserDataStructureUpdateDataStructureRoot(IntegrationBaseTestCase):
     fixture = fixture_data_structure
 
     def test_update_others_data_structure_root_as_superuser_updates_data_structure(
@@ -102,7 +100,7 @@ class TestUserDataStructureUpdateDataStructureRoot(
         )
 
 
-class TestUserDataStructureCreateOrUpdate(MongoIntegrationBaseTestCase):
+class TestUserDataStructureCreateOrUpdate(IntegrationBaseTestCase):
     fixture = fixture_data_structure
 
     def test_upsert_own_data_structure_updates_data_structure(self):
@@ -115,7 +113,7 @@ class TestUserDataStructureCreateOrUpdate(MongoIntegrationBaseTestCase):
         self.assertTrue(data_structure.name, result.name)
 
 
-class TestUserDataStructureGetByDataId(MongoIntegrationBaseTestCase):
+class TestUserDataStructureGetByDataId(IntegrationBaseTestCase):
     fixture = fixture_data_structure
 
     def test_get_by_data_id_as_superuser_returns_data_structure(self):
@@ -153,7 +151,7 @@ class TestUserDataStructureGetByDataId(MongoIntegrationBaseTestCase):
             )
 
 
-class TestDataStructureChangeOwner(MongoIntegrationBaseTestCase):
+class TestDataStructureChangeOwner(IntegrationBaseTestCase):
 
     fixture = fixture_data_structure
 

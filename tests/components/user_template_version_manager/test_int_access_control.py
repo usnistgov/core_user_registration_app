@@ -3,7 +3,7 @@
 
 from core_main_app.access_control.exceptions import AccessControlError
 from core_main_app.utils.integration_tests.integration_base_test_case import (
-    MongoIntegrationBaseTestCase,
+    IntegrationBaseTestCase,
 )
 from core_main_app.utils.tests_tools.MockUser import create_mock_user
 from core_main_app.utils.tests_tools.RequestMock import create_mock_request
@@ -20,7 +20,7 @@ fixture_template_vm = UserTemplateVersionManagerAccessControlFixtures()
 # FIXME: missing tests where CAN_ANONYMOUS_ACCESS_PUBLIC_DOCUMENT is True
 
 
-class TestTemplateVersionManagerInsert(MongoIntegrationBaseTestCase):
+class TestTemplateVersionManagerInsert(IntegrationBaseTestCase):
 
     fixture = fixture_template_vm
 
@@ -133,7 +133,7 @@ class TestTemplateVersionManagerInsert(MongoIntegrationBaseTestCase):
         )
 
 
-class TestTemplateGetGlobalVersionManagers(MongoIntegrationBaseTestCase):
+class TestTemplateGetGlobalVersionManagers(IntegrationBaseTestCase):
 
     fixture = fixture_template_vm
 

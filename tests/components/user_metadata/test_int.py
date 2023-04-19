@@ -5,7 +5,7 @@ from core_main_app.commons import exceptions
 from core_main_app.settings import DATA_SORTING_FIELDS
 from core_main_app.utils.datetime import datetime_now
 from core_main_app.utils.integration_tests.integration_base_test_case import (
-    MongoIntegrationBaseTestCase,
+    IntegrationBaseTestCase,
 )
 from core_main_app.utils.tests_tools.MockUser import create_mock_user
 from core_user_registration_app.components.user_metadata.api import (
@@ -23,7 +23,7 @@ fixture_data = DataFixtures()
 access_control_data_fixture = AccessControlDataFixture()
 
 
-class TestDataGetAll(MongoIntegrationBaseTestCase):
+class TestDataGetAll(IntegrationBaseTestCase):
 
     fixture = access_control_data_fixture
 
@@ -107,7 +107,7 @@ class TestDataGetAll(MongoIntegrationBaseTestCase):
         )
 
 
-class TestDataGetById(MongoIntegrationBaseTestCase):
+class TestDataGetById(IntegrationBaseTestCase):
 
     fixture = fixture_data
 
