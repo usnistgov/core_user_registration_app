@@ -37,17 +37,17 @@
                     <i class="fa fa-times"></i> Deny
                 </div>
             </td>
-            {% if request.metadata  %}
-
-            <td><div class="btn btn-view-metadata">
-
-                <i class ="fa fa-file-text-o"></i> View metadata
-            </div>
-            {% endif %}
+            <td>
+                {% if request.metadata  %}
+                <div class="btn btn-view-metadata">
+                    <i class ="fa fa-file-text-o"></i> View metadata
+                </div>
+                {% endif %}
+            </td>
         </tr>
     {% empty %}
         <tr>
-            <td class="empty" colspan="6">
+            <td class="empty" colspan="7">
                 No account requests pending at the moment.
             </td>
         </tr>
