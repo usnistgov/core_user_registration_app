@@ -24,7 +24,7 @@ from core_main_app.rest.template import views as template_views
 urlpatterns = [
     re_path("captcha/", include("captcha.urls")),
     re_path(
-        r"^account-request",
+        r"^account-request/$",
         registration_views.request_new_account,
         name="core_user_registration_app_account_request",
     ),
