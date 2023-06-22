@@ -21,7 +21,7 @@ set_current_version = function(objectID){
             location.reload();
         },
         error:function(data){
-            $.notify(data.responseText);
+            $.notify(data.responseText, "danger");
         }
     });
 };
