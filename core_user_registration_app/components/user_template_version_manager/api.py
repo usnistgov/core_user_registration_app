@@ -2,12 +2,14 @@
 User Version Manager API
 """
 from core_main_app.access_control.decorators import access_control
+from core_main_app.commons.exceptions import CoreError
 from core_main_app.components.template import api as template_api
 from core_main_app.components.template.access_control import can_read_global
 from core_main_app.components.version_manager import api as version_manager_api
 from core_main_app.components.version_manager.utils import (
     get_latest_version_name,
 )
+from core_main_app.utils.file import get_file_extension
 from core_user_registration_app.components.user_template_version_manager.access_control import (
     can_write,
 )
@@ -28,6 +30,9 @@ def insert(user_version_manager, template, request):
     Returns:
 
     """
+    template_extension = get_file_extension(template.filename)
+    if template_extension != ".xsd":
+        raise CoreError("Unsupported user registration template format.")
     # save the template in database
     template_api.upsert(template, request=request)
     try:

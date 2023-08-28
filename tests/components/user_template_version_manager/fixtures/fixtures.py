@@ -40,7 +40,7 @@ class UserTemplateVersionManagerAccessControlFixtures(FixtureInterface):
         self.user1_template = Template(
             filename="template1.xsd",
             content=xsd,
-            hash="hash1",
+            _hash="hash1",
             user="1",
             version_manager=self.user1_utvm,
             is_current=True,
@@ -55,7 +55,7 @@ class UserTemplateVersionManagerAccessControlFixtures(FixtureInterface):
         self.user2_template = Template(
             filename="template2.xsd",
             content=xsd,
-            hash="hash2",
+            _hash="hash2",
             user="2",
             version_manager=self.user2_utvm,
             is_current=True,
@@ -70,7 +70,7 @@ class UserTemplateVersionManagerAccessControlFixtures(FixtureInterface):
         self.global_template = Template(
             filename="global_template.xsd",
             content=xsd,
-            hash="global hash",
+            _hash="global hash",
             user=None,
             version_manager=self.global_tvm,
             is_current=True,

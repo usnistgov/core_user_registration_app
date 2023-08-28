@@ -18,7 +18,7 @@ def insert_registry_user_schema(xsd_filename, xsd_content):
     # Check if schema is valid
     is_schema_valid(xsd_content)
     template = Template(
-        filename=xsd_filename, hash=get_hash(xsd_content), content=xsd_content
+        filename=xsd_filename, _hash=get_hash(xsd_content), content=xsd_content
     )
     template.save_template()
 

@@ -1,12 +1,20 @@
 """ Metadata model
 """
+from django.conf import settings as conf_settings
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.db import models
 
 from core_main_app.commons import exceptions
 from core_main_app.components.abstract_data.models import AbstractData
 from core_main_app.components.template.models import Template
 from core_main_app.components.workspace.models import Workspace
+from core_main_app.settings import (
+    SEARCHABLE_DATA_OCCURRENCES_LIMIT,
+    XML_POST_PROCESSOR,
+    XML_FORCE_LIST,
+)
+from core_main_app.utils import xml as xml_utils
 
 
 class UserMetadata(AbstractData):
@@ -81,3 +89,30 @@ class UserMetadata(AbstractData):
 
         """
         return self.title
+
+    def convert_to_dict(self):
+        """Convert data object to dict."""
+        # if data stored in mongo, don't store dict_content
+        if conf_settings.MONGODB_INDEXING:
+            return
+
+        # transform xml content into a dictionary
+        self.dict_content = xml_utils.raw_xml_to_dict(
+            self.xml_content,
+            postprocessor=XML_POST_PROCESSOR,
+            force_list=XML_FORCE_LIST,
+            list_limit=SEARCHABLE_DATA_OCCURRENCES_LIMIT,
+        )
+
+    def convert_to_file(self):
+        """Convert data to file."""
+        try:
+            content = self.content.encode("utf-8")
+        except UnicodeEncodeError:
+            content = self.content
+
+        self.file = SimpleUploadedFile(
+            name=self.title,
+            content=content,
+            content_type="application/xml",
+        )
