@@ -80,7 +80,7 @@ def save_data(request):
             )
             user_data_structure_api.delete(user_data_structure, request.user)
             messages.add_message(
-                request, messages.SUCCESS, "User metadata saved with success."
+                request, messages.SUCCESS, "User metadata saved."
             )
     except Exception as e:
         message = str(e).replace('"', "'")
