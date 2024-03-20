@@ -20,4 +20,4 @@ class UserRegistrationAppConfig(AppConfig):
         if "migrate" not in sys.argv:
             import core_user_registration_app.discover as discover
 
-            discover.init_registration_app()
+            discover.init_permissions()

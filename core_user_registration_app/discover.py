@@ -6,30 +6,25 @@ from os.path import join
 from django.contrib.auth.models import Group, Permission
 from django.contrib.staticfiles import finders
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.migrations.exceptions import BadMigrationError
 from django_celery_beat.models import CrontabSchedule, PeriodicTask
 
 import core_main_app.permissions.rights as main_rights
 import core_user_registration_app.permissions.rights as registration_rights
 from core_main_app.commons import exceptions
+from core_main_app.components.template_xsl_rendering import (
+    api as template_xsl_rendering_api,
+)
 from core_main_app.components.xsl_transformation import (
     api as xslt_transformation_api,
 )
 from core_main_app.components.xsl_transformation.models import (
     XslTransformation,
 )
-from core_main_app.system import api as system_api
-from core_main_app.utils.file import read_file_content
-from core_user_registration_app.components.user_template_version_manager import (
-    api as user_version_manager_api,
-)
-from core_user_registration_app.settings import (
-    REGISTRY_XSD_USER_FILENAME,
-    REGISTRY_XSD_USER_FILEPATH,
-)
-from core_user_registration_app.settings import (
-    XSL_FOLDER_PATH,
-    LIST_XSL_FILENAME,
-    DETAIL_XSL_FILENAME,
+from core_main_app.utils import file as file_utils
+from core_user_registration_app import settings as user_registration_settings
+from core_user_registration_app.components.user_template_version_manager.models import (
+    UserTemplateVersionManager,
 )
 from core_user_registration_app.system import api as registry_system_api
 from core_user_registration_app.tasks import delete_user_data_structure
@@ -43,23 +38,72 @@ def init_registration_app():
     Returns:
 
     """
+    # Check if data were previously inserted
+    if UserTemplateVersionManager.objects.count() > 0:
+        logger.warning("The database is not empty. Skipping migration.")
+        return
 
-    try:
-        # Init scheduled tasks
-        _init_periodic_tasks()
-        # Add template
-        _add_user_template()
-        # Init the permissions
-        _init_permissions()
-        # Init the xslt
-        _init_xslt()
-    except Exception as e:
-        logger.error(
-            "Impossible to init the registration app: {0}".format(str(e))
+    # Check if settings are set
+    if (
+        not user_registration_settings.REGISTRY_XSD_USER_FILEPATH
+        or not user_registration_settings.REGISTRY_XSD_USER_FILENAME
+        or not user_registration_settings.XSL_FOLDER_PATH
+        or not user_registration_settings.LIST_XSL_FILENAME
+        or not user_registration_settings.DETAIL_XSL_FILENAME
+    ):
+        raise BadMigrationError(
+            "Please configure the REGISTRY_XSD_USER_FILENAME "
+            "and REGISTRY_XSD_USER_FILEPATH, "
+            "XSL_FOLDER_PATH, LIST_XSL_FILENAME and DETAIL_XSL_FILENAME "
+            "setting in your project."
         )
 
+    # Load files
+    default_xsd_path = finders.find(
+        user_registration_settings.REGISTRY_XSD_USER_FILEPATH
+    )
+    list_xslt_path = finders.find(
+        join(
+            user_registration_settings.XSL_FOLDER_PATH,
+            user_registration_settings.LIST_XSL_FILENAME,
+        )
+    )
+    detail_xslt_path = finders.find(
+        join(
+            user_registration_settings.XSL_FOLDER_PATH,
+            user_registration_settings.DETAIL_XSL_FILENAME,
+        )
+    )
+    if not default_xsd_path or not list_xslt_path or not detail_xslt_path:
+        raise BadMigrationError(
+            "A file required for loading data was not found."
+        )
 
-def _init_permissions():
+    # Read files
+    xsd_data = file_utils.read_file_content(default_xsd_path)
+
+    # Create User template
+    user_template_vm = registry_system_api.insert_registry_user_schema(
+        user_registration_settings.REGISTRY_XSD_USER_FILENAME, xsd_data
+    )
+    # Save list and detail XSLT
+    list_xslt = _get_or_create_xslt(
+        list_xslt_path, user_registration_settings.LIST_XSL_FILENAME
+    )
+    detail_xslt = _get_or_create_xslt(
+        detail_xslt_path, user_registration_settings.DETAIL_XSL_FILENAME
+    )
+
+    # Bind XSLT to template
+    template_xsl_rendering_api.add_or_delete(
+        template=user_template_vm.current_version,
+        list_xslt=list_xslt,
+        default_detail_xslt=detail_xslt,
+        list_detail_xslt=[detail_xslt],
+    )
+
+
+def init_permissions():
     """Initialization of groups and permissions."""
     try:
         # Get or Create the default group
@@ -85,65 +129,11 @@ def _init_permissions():
         logger.error("Impossible to init register permissions: %s" % str(e))
 
 
-def _add_user_template():
-    """Add the registry template.
-
-    Returns:
-
-    """
-    xsd_filepath = REGISTRY_XSD_USER_FILEPATH
-    xsd_filename = REGISTRY_XSD_USER_FILENAME
-    if xsd_filename == "":
-        raise Exception(
-            "Please configure the REGISTRY_XSD_USER_FILENAME setting in your project."
-        )
-    if xsd_filepath == "":
-        raise Exception(
-            "Please configure the REGISTRY_XSD_USER_FILEPATH setting in your project."
-        )
-    try:
-        registry_system_api.get_active_global_version_manager_by_title(
-            xsd_filename
-        )
-    except exceptions.DoesNotExist:
-        default_xsd_path = finders.find(xsd_filepath)
-        xsd_data = read_file_content(default_xsd_path)
-        registry_system_api.insert_registry_user_schema(xsd_filename, xsd_data)
-    except Exception as e:
-        logger.error("Impossible to add the template: {0}".format(str(e)))
-
-
-def _init_xslt():
-    """Init the XSLTs. Add XSLTs and the binding with the user template.
-
-    Returns:
-
-    """
-    try:
-        # Get or create template
-        template_version_manager = (
-            user_version_manager_api.get_default_version_manager()
-        )
-        # Get or create XSLTs
-        list_xslt = _get_or_create_xslt(LIST_XSL_FILENAME)
-        default_detail_xslt = _get_or_create_xslt(DETAIL_XSL_FILENAME)
-        list_detail_xslt = [default_detail_xslt]
-        # Create binding between template and XSLTs if does not exist
-        _bind_template_xslt(
-            template_version_manager[0].current,
-            list_xslt,
-            default_detail_xslt,
-            list_detail_xslt,
-        )
-    except Exception as e:
-        print("ERROR : Impossible to init the XSLTs. " + str(e))
-
-
-def _get_or_create_xslt(filename):
-    """Get or create an xslt.
+def _get_or_create_xslt(file_path, filename):
+    """Get or create a xslt.
 
     Args:
-        filename: XSLT filename.
+        file_path: XSLT filename.
 
     Returns:
         XSLT.
@@ -151,56 +141,18 @@ def _get_or_create_xslt(filename):
     """
     try:
         return xslt_transformation_api.get_by_name(filename)
-    except exceptions.ApiError:
-        # Get XSLT.
-        list_xslt_path = finders.find(join(XSL_FOLDER_PATH, filename))
+    except exceptions.DoesNotExist:
+        logger.info(f"XSLT {filename} not found, creating it now.")
         # Read content.
-        list_xsl_data = read_file_content(list_xslt_path)
+        xsl_data = file_utils.read_file_content(file_path)
         # Create the XSLT.
         list_xslt = XslTransformation(
-            name=filename, filename=filename, content=list_xsl_data
+            name=filename, filename=filename, content=xsl_data
         )
         return xslt_transformation_api.upsert(list_xslt)
-    except Exception as e:
-        raise Exception(
-            "Impossible to add the xslt {0} : {1} ".format(filename, str(e))
-        )
 
 
-def _bind_template_xslt(
-    template_id, list_xslt, default_detail_xslt, list_detail_xslt
-):
-    """Bind the registry template with the XSLTs.
-
-    Args:
-        template_id: Registry template id.
-        list_xslt: List XSLT.
-        default_detail_xslt: Detail XSLT.
-        list_detail_xslt:
-
-    Returns:
-
-    """
-    from core_main_app.components.template_xsl_rendering import (
-        api as template_xsl_rendering_api,
-    )
-
-    try:
-        template_xsl_rendering_api.get_by_template_id(template_id)
-    except exceptions.DoesNotExist:
-        template_xsl_rendering_api.add_or_delete(
-            template=system_api.get_template_by_id(template_id),
-            list_xslt=list_xslt,
-            default_detail_xslt=default_detail_xslt,
-            list_detail_xslt=list_detail_xslt,
-        )
-    except Exception as e:
-        raise Exception(
-            "Impossible to bind the template with XSLTs : " + str(e)
-        )
-
-
-def _init_periodic_tasks():
+def init_periodic_tasks():
     """Create periodic tasks for the app and add them to a crontab schedule"""
     schedule, _ = CrontabSchedule.objects.get_or_create(
         minute="*",

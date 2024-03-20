@@ -14,6 +14,7 @@ INSTALLED_APPS = [
     "django_celery_beat",
     # Local apps
     "core_main_app",
+    "core_main_registry_app",
     "core_website_app",
     "core_parser_app",
     "core_curate_app",
@@ -75,3 +76,5 @@ CELERYBEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 CAN_ANONYMOUS_ACCESS_PUBLIC_DOCUMENT = False
 MONGODB_INDEXING = False
 MONGODB_ASYNC_SAVE = False
+
+CELERY_ALWAYS_EAGER = True

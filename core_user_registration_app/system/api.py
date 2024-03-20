@@ -54,7 +54,6 @@ def get_active_global_version_manager_by_title(version_manager_title):
 
     Args:
         version_manager_title:
-        _cls:
 
     Returns:
 
