@@ -83,7 +83,10 @@ def init_registration_app():
     xsd_data = file_utils.read_file_content(default_xsd_path)
 
     # Create User template
-    user_template_vm = registry_system_api.insert_registry_user_schema(
+    (
+        user_template_vm,
+        current_version,
+    ) = registry_system_api.insert_registry_user_schema(
         user_registration_settings.REGISTRY_XSD_USER_FILENAME, xsd_data
     )
     # Save list and detail XSLT
@@ -96,7 +99,7 @@ def init_registration_app():
 
     # Bind XSLT to template
     template_xsl_rendering_api.add_or_delete(
-        template=user_template_vm.current_version,
+        template=current_version,
         list_xslt=list_xslt,
         default_detail_xslt=detail_xslt,
         list_detail_xslt=[detail_xslt],

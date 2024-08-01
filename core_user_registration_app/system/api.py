@@ -38,7 +38,7 @@ def insert_registry_user_schema(xsd_filename, xsd_content):
         # save template
         template.save()
         # return version manager
-        return user_version_manager
+        return user_version_manager, template
     except Exception as e:
         template.delete()
         raise e
