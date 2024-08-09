@@ -127,7 +127,7 @@ class TestUserDataStructureGetByDataId(IntegrationBaseTestCase):
             self.fixture.data.id, mock_user
         )
         self.assertTrue(isinstance(data_structure, UserDataStructure))
-        self.assertEquals(self.fixture.data.id, data_structure.data.id)
+        self.assertEqual(self.fixture.data.id, data_structure.data.id)
 
     def test_get_by_data_id_as_owner_returns_data_structure(self):
         mock_user = create_mock_user(self.fixture.data_structure_1.user)
@@ -135,7 +135,7 @@ class TestUserDataStructureGetByDataId(IntegrationBaseTestCase):
             self.fixture.data.id, mock_user
         )
         self.assertTrue(isinstance(data_structure, UserDataStructure))
-        self.assertEquals(self.fixture.data.id, data_structure.data.id)
+        self.assertEqual(self.fixture.data.id, data_structure.data.id)
 
     def test_get_by_data_id_as_user_non_owner_raises_error(self):
         mock_user = create_mock_user(self.fixture.data_structure_3.user)
