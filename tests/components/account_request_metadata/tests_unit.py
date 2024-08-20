@@ -1,5 +1,6 @@
 """ Tests of the account request API
 """
+
 from unittest.case import TestCase
 
 from django.contrib.auth.models import User

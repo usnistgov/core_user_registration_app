@@ -1,5 +1,6 @@
 """ Unit Test User Data Structure
 """
+
 from unittest.case import TestCase
 
 from unittest.mock import patch

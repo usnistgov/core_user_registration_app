@@ -1,5 +1,6 @@
 """ User data Structure api
 """
+
 from core_main_app.access_control.api import has_perm_administration
 from core_main_app.access_control.decorators import access_control
 from core_user_registration_app.access_control.api import (

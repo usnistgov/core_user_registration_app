@@ -1,5 +1,6 @@
 """ REST views for the registry template version manager API
 """
+
 from django.contrib.admin.views.decorators import staff_member_required
 from django.http.response import HttpResponseBadRequest, HttpResponse
 from rest_framework.permissions import IsAuthenticated
