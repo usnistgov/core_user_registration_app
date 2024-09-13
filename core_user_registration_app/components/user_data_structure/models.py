@@ -2,7 +2,6 @@
 """
 
 from django.core.exceptions import ObjectDoesNotExist
-from django.db.models.signals import pre_delete
 
 
 from core_main_app.commons import exceptions
@@ -197,7 +196,3 @@ class UserDataStructure(DataStructure):
             raise exceptions.DoesNotExist(str(e))
         except Exception as ex:
             raise exceptions.ModelError(str(ex))
-
-
-# Connect signals
-pre_delete.connect(DataStructure.pre_delete, sender=UserDataStructure)

@@ -55,7 +55,7 @@ def delete(user_data_structure, user):
         user_data_structure:
         user:
     """
-    user_data_structure.delete()
+    user_data_structure.delete_data_structure_with_elements()
 
 
 @access_control(can_read)
