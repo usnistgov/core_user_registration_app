@@ -70,6 +70,7 @@ PASSWORD_HASHERS = ("django.contrib.auth.hashers.UnsaltedMD5PasswordHasher",)
 DATA_SORTING_FIELDS = ["+title"]
 
 CUSTOM_NAME = "Curator"
+ENABLE_ALLAUTH = False
 ENABLE_SAML2_SSO_AUTH = False
 CELERYBEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 
