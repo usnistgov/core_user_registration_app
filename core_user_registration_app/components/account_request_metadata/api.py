@@ -115,7 +115,7 @@ def create_account_request(user):
         template_path = (
             "core_website_app/admin/email/request_account_for_admin.html"
         )
-        send_mail_api.send_mail_to_administrators(
+        send_mail_api.send_mail_to_website_contacts(
             subject="New Account Request",
             path_to_template=template_path,
             context=context,
