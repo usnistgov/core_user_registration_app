@@ -1,4 +1,4 @@
-"""User Registration tasks """
+"""User Registration tasks"""
 
 import logging
 

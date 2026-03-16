@@ -1,5 +1,4 @@
-""" Initialize permissions for core user registration app.
-"""
+"""Initialize permissions for core user registration app."""
 
 import logging
 from os.path import join

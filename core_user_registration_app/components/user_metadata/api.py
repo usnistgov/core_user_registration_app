@@ -1,5 +1,4 @@
-""" Metadata API
-"""
+"""Metadata API"""
 
 from core_main_app.commons import exceptions as exceptions
 from core_main_app.utils.datetime import datetime_now

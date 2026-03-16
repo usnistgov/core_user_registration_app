@@ -1,5 +1,4 @@
-""" Unit Test UserMetadata
-"""
+"""Unit Test UserMetadata"""
 
 from core_main_app.commons import exceptions
 from core_main_app.settings import DATA_SORTING_FIELDS

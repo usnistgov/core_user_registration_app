@@ -1,5 +1,4 @@
-"""User Data Structure models
-"""
+"""User Data Structure models"""
 
 from django.core.exceptions import ObjectDoesNotExist
 

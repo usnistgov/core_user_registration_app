@@ -5,7 +5,6 @@ User registration app menu
 from django.urls import reverse
 from menu import Menu, MenuItem
 
-
 templates_children = (
     MenuItem(
         "User Template List",

@@ -1,5 +1,4 @@
-""" Access control testing
-"""
+"""Access control testing"""
 
 from tests.components.user_template_version_manager.fixtures.fixtures import (
     UserTemplateVersionManagerAccessControlFixtures,

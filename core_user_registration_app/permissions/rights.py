@@ -1,5 +1,4 @@
-""" Rights for core user registration
-"""
+"""Rights for core user registration"""
 
 register_content_type = "core_user_registration"
 register_access = "access_register"

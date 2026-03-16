@@ -1,5 +1,4 @@
-""" Url router for the administration site
-"""
+"""Url router for the administration site"""
 
 from django.contrib import admin
 from django.urls import re_path

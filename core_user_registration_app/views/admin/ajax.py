@@ -1,5 +1,4 @@
-""" REST views for the registry template version manager API
-"""
+"""REST views for the registry template version manager API"""
 
 from django.contrib.admin.views.decorators import staff_member_required
 from django.http.response import HttpResponseBadRequest, HttpResponse

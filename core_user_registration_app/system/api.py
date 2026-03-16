@@ -1,5 +1,4 @@
-""" System api to access data without access control neither API rules
-"""
+"""System api to access data without access control neither API rules"""
 
 from core_main_app.components.template.models import Template
 from core_main_app.components.version_manager.utils import (

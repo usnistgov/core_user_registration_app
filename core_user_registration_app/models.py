@@ -1,5 +1,4 @@
-"""Registration models
-"""
+"""Registration models"""
 
 from django.db import models
 

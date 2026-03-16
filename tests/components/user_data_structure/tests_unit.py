@@ -1,5 +1,4 @@
-""" Unit Test User Data Structure
-"""
+"""Unit Test User Data Structure"""
 
 from unittest.case import TestCase
 

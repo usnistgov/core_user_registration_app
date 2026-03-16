@@ -1,5 +1,4 @@
-""" Fixtures files for UserMetadata
-"""
+"""Fixtures files for UserMetadata"""
 
 from core_main_app.components.template.models import Template
 from core_main_app.components.workspace.models import Workspace

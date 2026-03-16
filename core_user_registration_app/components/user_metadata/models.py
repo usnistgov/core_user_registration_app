@@ -1,5 +1,4 @@
-""" Metadata model
-"""
+"""Metadata model"""
 
 from django.conf import settings as conf_settings
 from django.core.exceptions import ObjectDoesNotExist
